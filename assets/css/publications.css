@@ -1,0 +1,20 @@
+/* Publications (#publications): a compact list between hairlines.
+ * ol.pubs > li.pub > .pub-venue (chapter index + venue tags) + .pub-main (h3 title + p authors) + .pub-links. */
+#publications .pubs { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+#publications .pub { display: grid; grid-template-columns: 228px minmax(0, 1fr) auto; align-items: start; gap: 10px 28px; padding: 24px 0 22px; border-bottom: 1px solid var(--line); }
+#publications .pub-venue { display: grid; grid-template-columns: 30px minmax(0, 1fr); align-items: center; gap: 6px; padding-top: 3px; }
+#publications .pub-venue .tag { grid-column: 2; justify-self: start; }
+#publications .pub-no { grid-column: 1; grid-row: 1; font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: .08em; color: var(--rra-ink); }
+#publications .pub-main h3 { margin: 0 0 6px; font-size: 18px; font-weight: 580; letter-spacing: -.012em; line-height: 1.32; text-wrap: pretty; }
+#publications .pub-main h3 a { color: var(--ink); text-decoration: none; background: linear-gradient(var(--rra), var(--rra)) left bottom / 0 1.5px no-repeat; transition: background-size .35s var(--ease-out), color .2s; }
+#publications .pub-main h3 a:hover { color: var(--rra-ink); background-size: 100% 1.5px; }
+#publications .pub-main p { margin: 0; font-size: 14.5px; line-height: 1.55; color: var(--ink-2); text-wrap: pretty; }
+#publications .pub-main p b { color: var(--ink); font-weight: 650; }
+#publications .pub-note { margin-left: 6px; font-size: 12.5px; color: var(--ink-3); white-space: nowrap; }
+#publications .pub-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; padding-top: 1px; }
+@media (max-width: 1000px) {
+  #publications .pub { grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 22px 0; }
+  #publications .pub-links { justify-content: flex-start; }
+  #publications .pub-venue { display: flex; flex-wrap: wrap; padding-top: 0; }
+  #publications .pub-no { width: 26px; }
+}

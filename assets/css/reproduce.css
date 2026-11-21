@@ -1,0 +1,15 @@
+/* Chapter 04 · Reproduce: the four parts of the artifact, paired case numerals, the no-feedback note, the quotation. */
+#reproduce .r-parts { margin-top: 8px; }
+#reproduce .r-parts .k-icard h4 { font-size: 18px; }
+#reproduce .r-built { margin: 14px 0 0; }
+#reproduce .r-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#reproduce .r-pair .stat:nth-child(2n) { border-right: 0; }
+#reproduce .stat .n.r-red { color: var(--red-ink); }
+#reproduce .stats + .note, #reproduce .stats + .caveat { margin-top: 16px; }
+#reproduce .r-quote { margin-top: 32px; }
+@media (max-width: 760px) {
+  #reproduce .r-parts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  #reproduce .r-parts .k-icard { padding: 18px 16px 16px; }
+  #reproduce .r-parts .k-icard h4 { font-size: 16px; }
+  #reproduce .r-parts .k-icard p { font-size: 14px; }
+}

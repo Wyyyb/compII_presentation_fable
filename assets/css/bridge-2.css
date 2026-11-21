@@ -1,0 +1,6 @@
+/* Bridge 2 (#bridge-2): the extra "So" row, between Still open and Next question. */
+#bridge-2 .br-line.is-so dt { color: var(--ink); }
+#bridge-2 .br-line.is-so dt::before { background: var(--ink-3); border-radius: 2px; transform: rotate(45deg) scale(.8); }
+#bridge-2 .br-line.is-so dd { color: var(--ink); font-weight: 560; }
+#bridge-2 .br-line dd em { font-style: normal; color: var(--violet-ink); font-weight: 600; }
+#bridge-2 .br-line.is-next dd em { color: var(--rra); font-weight: inherit; }

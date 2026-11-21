@@ -1,0 +1,134 @@
+<!-- The thread (#thread): the question of the talk and the ROADMAP, five question cards on one rail.
+     Styled by assets/css/thread.css. Each card is one <li class="road-stop">:
+       is-done = a completed work (filled node)      is-wip = in progress (dashed gold node, dashed card)
+       to-wip  = on the last completed stop: the line that leaves it is dashed
+     The two groups carry the brackets "A capable model" (nodes 1-2) and "Output we can check: grounded,
+     reproducible, auditable" (nodes 3-5); style="--n:…" is the number of cards in the group.
+     Before the roadmap: the opening example, the three conditions in the narrow sense of trust and the thesis
+     direction, verbatim, with its two halves: green = assessment, gold = a hypothesis to test.
+     Wording: the completed works take a first step on a question; never write that a question is settled. -->
+<section class="sec" id="thread" aria-labelledby="thread-title">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">The thread</p>
+      <h2 id="thread-title">What would it take to trust research done by AI?</h2>
+      <p class="lede">In 2025 an AI-written paper passed workshop peer review at ICLR. The system's own team read the code: by their estimate, <b>about 57%</b> of the test set overlapped with the training set. The published reviews never mention it. No reader could tell from the PDF.</p>
+    </div>
+    <p class="caveat th-src" data-reveal><span>The paper may still be right; it was withdrawn before publication, by prior agreement. Source: <a href="https://arxiv.org/abs/2504.08066" target="_blank" rel="noopener">The AI Scientist-v2 (Yamada et al., arXiv 2504.08066)</a>, Figure 3 and Appendix C.1.2.</span></p>
+
+    <h3 class="sub" data-reveal>Trust, in a narrow sense</h3>
+    <p class="sub-lede" data-reveal>By trust I mean something narrow: <b>another researcher can check the work</b>. The title names three conditions.</p>
+    <div class="grid3 th-props" data-reveal>
+      <article class="k-icard">
+        <span class="k-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg></span>
+        <h4>Grounded</h4>
+        <p>Its sources can be checked: a reader can look up the sources behind each statement.</p>
+      </article>
+      <article class="k-icard">
+        <span class="k-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/></svg></span>
+        <h4>Reproducible</h4>
+        <p>Its experiments re-run: someone else can run them again and get compatible numbers.</p>
+      </article>
+      <article class="k-icard">
+        <span class="k-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M8 11l2 2 4-4"/></svg></span>
+        <h4>Auditable</h4>
+        <p>Its claims trace to evidence: a claim can be followed back to what was run and measured.</p>
+      </article>
+    </div>
+    <p class="caveat" data-reveal>None of the three makes the science valid. They make it checkable.</p>
+
+    <h3 class="sub" data-reveal>The thesis direction has two halves</h3>
+    <p class="sub-lede" data-reveal>The proposal joins the three conditions in one sentence. The setting is computational machine learning: research whose evidence is code, data and numbers.</p>
+    <figure class="th-thesis" data-reveal>
+      <blockquote class="k-quote"><p>Autonomous research becomes <mark class="th-a">more assessable</mark>, and <mark class="th-b">potentially more effective</mark>, when evidence linking claims to sources and experiments is preserved during execution and audit findings guide subsequent actions.</p></blockquote>
+      <figcaption>
+        <span class="th-key th-key-a"><i aria-hidden="true"></i><span><b>First half</b>: assessment</span></span>
+        <span class="th-key th-key-b"><i aria-hidden="true"></i><span><b>Second half</b>: a hypothesis to test</span></span>
+        <span class="tag-note">Verbatim from the proposal, p. 1</span>
+      </figcaption>
+    </figure>
+    <p class="caveat" data-reveal>If a system keeps the evidence that links each claim to its sources and experiments, other people can assess its research. If audit findings also guide what the system does next, the research itself may improve. That second half needs a direct test, and the proposal sets one out.</p>
+
+    <h3 class="sub" data-reveal>Five questions, one chain</h3>
+    <p class="sub-lede" data-reveal>The first two questions are about <b>the model</b>. The last three are about <b>its output</b>: the three words of the title.</p>
+    <div class="road" data-reveal>
+      <section class="road-grp" style="--n:2" aria-labelledby="road-a">
+        <p class="road-brk" id="road-a"><span>A capable model</span></p>
+        <ol class="road-stops">
+          <li class="road-stop is-done">
+            <i class="road-node" aria-hidden="true"></i>
+            <a class="road-card" href="#measure">
+              <span class="road-main">
+                <span class="road-verb">01 · Measure</span>
+                <span class="road-q">Can we measure what the model can really do?</span>
+              </span>
+              <span class="road-foot">
+                <span class="road-work">MMLU-Pro</span>
+                <span class="road-chips"><span class="tag rra">NeurIPS 2024 D&amp;B</span><span class="tag rra">Spotlight</span></span>
+              </span>
+            </a>
+          </li>
+          <li class="road-stop is-done">
+            <i class="road-node" aria-hidden="true"></i>
+            <a class="road-card" href="#improve">
+              <span class="road-main">
+                <span class="road-verb">02 · Improve</span>
+                <span class="road-q">Can we make it reason better?</span>
+              </span>
+              <span class="road-foot">
+                <span class="road-work">Critique Fine-Tuning + One-Shot CFT</span>
+                <span class="road-chips"><span class="tag rra">COLM 2025</span><span class="tag rra">EMNLP 2025</span></span>
+              </span>
+            </a>
+          </li>
+        </ol>
+      </section>
+
+      <section class="road-grp is-title" style="--n:3" aria-labelledby="road-b">
+        <p class="road-brk" id="road-b"><span>Output we can check<span class="th-brk-more">: grounded, reproducible, auditable</span></span></p>
+        <ol class="road-stops" start="3">
+          <li class="road-stop is-done">
+            <i class="road-node" aria-hidden="true"></i>
+            <a class="road-card" href="#ground">
+              <span class="road-main">
+                <span class="road-verb">03 · Ground</span>
+                <span class="road-q">Is what it writes tied to real sources?</span>
+              </span>
+              <span class="road-foot">
+                <span class="road-work">ScholarCopilot</span>
+                <span class="road-chips"><span class="tag rra">COLM 2025</span></span>
+              </span>
+            </a>
+          </li>
+          <li class="road-stop is-done to-wip">
+            <i class="road-node" aria-hidden="true"></i>
+            <a class="road-card" href="#reproduce">
+              <span class="road-main">
+                <span class="road-verb">04 · Reproduce</span>
+                <span class="road-q">Do its experiments re-run?</span>
+              </span>
+              <span class="road-foot">
+                <span class="road-work">ReproBridge</span>
+                <span class="road-chips"><span class="tag">arXiv preprint</span><span class="tag">2026</span></span>
+              </span>
+            </a>
+          </li>
+          <li class="road-stop is-wip">
+            <i class="road-node" aria-hidden="true"></i>
+            <a class="road-card" href="#audit">
+              <span class="road-main">
+                <span class="road-verb">05 · Audit</span>
+                <span class="road-q">Do its claims follow from its evidence?</span>
+              </span>
+              <span class="road-foot">
+                <span class="road-work">Claim-linked evidence + independent audit</span>
+                <span class="road-chips"><span class="tag gold wip">In progress</span></span>
+              </span>
+            </a>
+          </li>
+        </ol>
+      </section>
+    </div>
+    <p class="road-note" data-reveal><span class="tag-note">Roadmap</span><span>This order is hindsight: the works were not planned as a chain, but each one left a gap that the next one addresses. Completed work takes a first step on each of the first four questions; grounding and reproduction are tested so far on human-written papers. The fifth is the proposed research.</span></p>
+  </div>
+</section>

@@ -1,0 +1,150 @@
+<!-- Chapter 02 · IMPROVE (#improve): Critique Fine-Tuning and One-Shot CFT. Same template as 03-measure.html.
+     Chapter styles: assets/css/improve.css. The question card is the one of chapter 01, repeated on purpose.
+     Wording rule: never say CFT produced a critic. The critiques come from a stronger teacher (GPT-4o), the gain is
+     measured in solving, the student is not asked to critique in the reported results, and self-critique at test
+     time lowered accuracy: "a training signal, not a critic". This is distillation of critiques instead of answers.
+     Numbers: CFT Table 2 (average of six math benchmarks, Qwen2.5-Math-7B), Table 3 (MMLU-Pro 39.3 -> 47.5),
+     Section 4 (about 1 in 5 of 50 inspected critiques); One-Shot CFT 27.3 -> 42.2 (best of four seed problems) and
+     +10.0 against the baseline as re-evaluated by Hochlehnert et al. (2025). -->
+<section class="sec chapter" id="improve" aria-labelledby="improve-title">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <p class="ch-label"><span class="sec-no">02 · Improve</span><span class="ch-q">Can we make it reason better?</span></p>
+      <h2 id="improve-title">Critique is a stronger training signal than answers</h2>
+      <p class="lede">We cannot retrain a frontier model, so we ask the question on small open models, and GPT-4o becomes the teacher. <b>Critique Fine-Tuning</b> trains the student to write the teacher's <b>critique</b> of a candidate answer. The gain is measured in <b>solving</b>.</p>
+    </div>
+
+    <div class="papers two" data-reveal>
+      <article class="paper">
+        <div class="paper-top">
+          <span class="k-ic is-neutral" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span>
+          <span class="kicker">Paper · first author</span>
+          <span class="paper-tags"><span class="tag rra">COLM 2025</span></span>
+        </div>
+        <h3>Critique <span class="nowrap">Fine-Tuning</span>: Learning to Critique is More Effective than Learning to Imitate</h3>
+        <p class="paper-authors"><b>Yubo Wang</b>, Xiang Yue, Wenhu Chen</p>
+        <div class="paper-links">
+          <a class="btn btn-sm ext" href="https://arxiv.org/abs/2501.17703" target="_blank" rel="noopener">arXiv</a>
+          <a class="btn btn-sm ext" href="https://tiger-ai-lab.github.io/CritiqueFineTuning/" target="_blank" rel="noopener">Project page</a>
+          <a class="btn btn-sm ext" href="https://github.com/TIGER-AI-Lab/CritiqueFineTuning" target="_blank" rel="noopener">Code</a>
+        </div>
+      </article>
+      <article class="paper">
+        <div class="paper-top">
+          <span class="k-ic is-neutral" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span>
+          <span class="kicker">Paper · first author</span>
+          <span class="paper-tags"><span class="tag rra">EMNLP 2025</span></span>
+        </div>
+        <h3>Unleashing the Reasoning Potential of <span class="nowrap">Pre-trained</span> LLMs by Critique <span class="nowrap">Fine-Tuning</span> on One Problem</h3>
+        <p class="paper-authors"><b>Yubo Wang</b>, Ping Nie, Kai Zou, Lijun Wu, Wenhu Chen</p>
+        <div class="paper-links">
+          <a class="btn btn-sm ext" href="https://arxiv.org/abs/2506.03295" target="_blank" rel="noopener">arXiv</a>
+          <a class="btn btn-sm ext" href="https://tiger-ai-lab.github.io/One-Shot-CFT/" target="_blank" rel="noopener">Project page</a>
+          <a class="btn btn-sm ext" href="https://github.com/TIGER-AI-Lab/One-Shot-CFT" target="_blank" rel="noopener">Code</a>
+        </div>
+      </article>
+    </div>
+
+    <h3 class="sub" data-reveal>The gap: a key says wrong; a critique says why</h3>
+    <p class="sub-lede" data-reveal>The same question from chapter 01. The answer key can only say that the model was wrong. One sentence from a human annotator gives the reason. That sentence is a critique, and it says much more than the key.</p>
+    <div class="im-gap" data-reveal>
+      <figure class="fig qcard">
+        <div class="qcard-body">
+          <p class="qcard-k">MMLU-Pro question · Engineering</p>
+          <p class="qcard-q">Minimum force on a piston that makes the water boil</p>
+          <ol class="qcard-opts" aria-label="Ten answer options. H is the answer key. GPT-4o chose B.">
+            <li><span><b>A</b> 3.12 kN</span></li>
+            <li class="is-model"><span><b>B</b> 7.2 kN</span><span class="qcard-tag">GPT-4o answers</span></li>
+            <li><span><b>C</b> 5.02 kN</span></li>
+            <li><span><b>D</b> 4.00 kN</span></li>
+            <li><span><b>E</b> 6.75 kN</span></li>
+            <li><span><b>F</b> 1.95 kN</span></li>
+            <li><span><b>G</b> 2.86 kN</span></li>
+            <li class="is-key"><span><b>H</b> 4.86 kN</span><span class="qcard-tag">Answer key</span></li>
+            <li><span><b>I</b> 5.5 kN</span></li>
+            <li><span><b>J</b> 3.98 kN</span></li>
+          </ol>
+        </div>
+      </figure>
+      <blockquote class="k-quote im-quote">
+        <span class="k-quote-k">Annotator</span>
+        <p>“…the pressure inside and outside the container should be <mark>subtracted, not added</mark>.”</p>
+        <footer>MMLU-Pro, Table 10: annotator's explanation · question shortened</footer>
+      </blockquote>
+    </div>
+
+    <h3 class="sub" data-reveal>The idea: train the student to write a teacher's critique</h3>
+    <p class="sub-lede" data-reveal>The input is a question with a candidate answer. The target is the teacher's critique of that answer: it names the mistake and ends with a verdict. So yes, this is distillation. What changes is what we distil: <b>critiques, not answers</b>.</p>
+    <ol class="k-pipe im-pipe" style="--n:3" data-reveal>
+      <li><span class="k-pipe-n">1</span><b>Input · question + candidate answer</b><span>“[Mitosis] also plays a role … by generating gametes…”</span></li>
+      <li class="is-judge"><span class="k-pipe-n">2</span><b>Target · teacher's critique</b><span>“…called <mark>meiosis</mark>, not mitosis. … Conclusion: wrong”</span></li>
+      <li class="is-ok"><span class="k-pipe-n">3</span><b>At test time</b><span>The student only answers. In the reported results, it is not asked to critique.</span></li>
+    </ol>
+    <p class="caveat" data-reveal>Critique Fine-Tuning (COLM 2025), Appendix A.1. The critique was written by GPT-4o; the student is a small base model.</p>
+
+    <h3 class="sub" data-reveal>Same questions, same teacher: critiquing beats copying</h3>
+    <p class="sub-lede" data-reveal>All three trained models see the same 50K questions, and the last two bars share one teacher. Imitating noisy web answers ends slightly below the base model. Copying the teacher's answers helps. Learning its critiques of the noisy answers helps more: the signal matters, not only the teacher behind it.</p>
+    <div class="chart-card" data-reveal>
+      <div class="chart-head">
+        <div>
+          <h4>Average accuracy on six math benchmarks</h4>
+          <p class="cap">Qwen2.5-Math-7B. Grey: no training. Outlined: imitate an answer. Filled: critique the noisy answer.</p>
+        </div>
+        <span class="tag-note">Qwen2.5-Math-7B · 6 math benchmarks</span>
+      </div>
+      <div class="chart" data-chart="bars" aria-label="Bar chart of average accuracy on six math benchmarks for Qwen2.5-Math-7B: base model 37.8, imitate the noisy answer 35.1, imitate the teacher's answer 50.4, critique the noisy answer 57.1.">
+        <script type="application/json">
+        {
+          "unit": "%",
+          "domain": [0, 60],
+          "decimals": 1,
+          "axis": "Average accuracy (%)",
+          "kinds": { "neutral": "Base model", "base": "Imitate an answer", "ours": "Critique the noisy answer" },
+          "rows": [
+            { "label": "Base model", "value": 37.8, "kind": "neutral" },
+            { "label": "Imitate the noisy answer", "value": 35.1, "kind": "base", "note": "50K noisy web answers" },
+            { "label": "Imitate the teacher's answer", "value": 50.4, "kind": "base", "note": "teacher: GPT-4o" },
+            { "label": "Critique the noisy answer", "value": 57.1, "kind": "ours", "note": "critiques by GPT-4o" }
+          ]
+        }
+        </script>
+        <noscript><p class="cap">Base model 37.8%; imitate the noisy answer 35.1%; imitate the teacher's answer 50.4%; critique the noisy answer 57.1%.</p></noscript>
+      </div>
+      <p class="caveat">Critique Fine-Tuning, Table 2.</p>
+    </div>
+
+    <div class="stats k-stats" data-reveal>
+      <div class="stat">
+        <div class="n"><span class="from">50.4 →</span>57.1<small>%</small></div>
+        <div class="l">copying the teacher's answers → learning its critiques; training takes about one hour on eight GPUs</div>
+        <span class="tag-note">6 math benchmarks · Table 2</span>
+      </div>
+      <div class="stat">
+        <div class="n"><span class="from">39.3 →</span>47.5<small>%</small></div>
+        <div class="l">on MMLU-Pro, the yardstick of chapter 01: about eight points for the same student</div>
+        <span class="tag-note">MMLU-Pro · Table 3</span>
+      </div>
+      <div class="stat">
+        <div class="n"><span class="from">27.3 →</span>42.2<small>%</small></div>
+        <div class="l">One-Shot CFT: one math problem, 600 filtered critiques, is enough</div>
+        <span class="tag-note">6 math benchmarks · Qwen2.5-Math-7B</span>
+      </div>
+    </div>
+    <p class="caveat" data-reveal>One-Shot CFT uses a slightly different benchmark set, and 42.2 is the best of four seed problems. Against the baseline as re-evaluated by Hochlehnert et al. (2025), the gain is +10.0 points.</p>
+
+    <div class="takeaway" data-reveal>
+      <span class="takeaway-k">Take-away</span>
+      <p>Critique is a stronger <b>training signal</b> than answers. Shown for 7B base models on math. Carried forward: <b>critique as feedback</b> (hypothesis).</p>
+    </div>
+
+    <h3 class="sub" data-reveal>Still open: the gain is in solving; a teacher wrote the critiques</h3>
+    <p class="sub-lede" data-reveal>Look at where the judgment came from. Every critique came from a model stronger than the student, and a benchmark with an answer key told us that the student improved.</p>
+    <ol class="grid3 im-judges" data-reveal>
+      <li class="im-j is-judge"><span class="im-j-k">Teacher</span><p>writes every critique</p></li>
+      <li class="im-j"><span class="im-j-k">Student</span><p>never scored on critiquing</p></li>
+      <li class="im-j is-judge"><span class="im-j-k">Answer key</span><p>grades the student</p></li>
+    </ol>
+    <p class="sub-lede im-after" data-reveal>Even the teacher makes mistakes: <b>about 1 in 5</b> of 50 inspected critiques had inaccuracies. With a weaker teacher, the gain is smaller. When the student critiqued its own answers at test time, accuracy went down. So CFT does not give us a critic. It gives us <b>a training signal</b>.</p>
+    <p class="caveat" data-reveal>Critique Fine-Tuning (COLM 2025), Sections 3.5 and 4.</p>
+  </div>
+</section>

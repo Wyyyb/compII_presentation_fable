@@ -1,0 +1,24 @@
+/* Chapter 03 · Ground: the two gap cases (code cards with the wrong span marked). */
+#ground .gap-cases { margin-top: 8px; align-items: stretch; }
+#ground .gap-case { display: flex; flex-direction: column; min-width: 0; padding: 22px 22px 20px; border: 1px solid var(--line); border-radius: var(--rad-lg); background: var(--bg); }
+#ground .gap-k {
+  display: flex; align-items: center; gap: 10px; margin: 0 0 8px;
+  font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
+}
+#ground .gap-no {
+  display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%;
+  border: 1px solid var(--line-2); font-size: 11px; letter-spacing: 0; color: var(--ink-2);
+}
+#ground .gap-case h4 { margin: 0 0 14px; font-size: 17px; font-weight: 600; letter-spacing: -.01em; color: var(--ink); }
+#ground .gap-case .code { flex: 1 1 auto; font-size: 12.5px; }      /* both code blocks take the same height, so the two notes under them line up */
+#ground .gap-case pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+#ground mark.err { background: var(--red-tint); color: var(--red-ink); border-radius: 3px; padding: 0 2px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+#ground .gap-fix { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; margin: 14px 0 0; font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
+#ground .gap-fix .tag { flex: none; }
+#ground .ground-callback { margin: 14px 0 0; }
+#ground .chart-head .tag-note { max-width: 100%; white-space: normal; text-align: left; }
+@media (max-width: 560px) {
+  #ground .gap-case { padding: 18px 16px 16px; }
+  #ground .gap-case .code { font-size: 11.5px; }
+  #ground .gap-case pre { padding: 14px; }
+}

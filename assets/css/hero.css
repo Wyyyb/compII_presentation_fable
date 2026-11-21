@@ -1,0 +1,118 @@
+/* Hero (#top): the proposal title as a four-line h1, author, lede, and the five-node schematic.
+ * The drawing is an inline SVG (640 x 520 units). Its labels are HTML, positioned in percent over the drawing,
+ * so they keep their size when the drawing scales. All motion sits behind prefers-reduced-motion. */
+#top.hero {
+  position: relative; overflow: hidden;
+  min-height: min(980px, 100svh);
+  padding: calc(var(--nav-h) + 56px) 0 96px;
+  display: flex; align-items: center;
+}
+#top .hero-grid { width: 100%; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px 40px; align-items: center; }
+#top .hero-text { position: relative; z-index: 2; min-width: 0; }
+#top .hero-eyebrow { margin-bottom: 24px; white-space: nowrap; }
+#top .hero-title {
+  font-size: clamp(40px, 4.65vw, 67px); font-weight: 560; letter-spacing: -.038em; line-height: 1.02;
+  margin: 0 0 30px -.03em; text-wrap: initial;
+}
+#top .hero-title .ln { display: block; white-space: nowrap; }
+#top .hero-title .hl { color: var(--rra); }
+html.js #top .hero-title .ln { opacity: 0; transform: translateY(26%); animation: c2-rise .95s var(--ease-out) forwards; }
+html.js #top .hero-title .ln:nth-child(2) { animation-delay: .07s; }
+html.js #top .hero-title .ln:nth-child(3) { animation-delay: .14s; }
+html.js #top .hero-title .ln:nth-child(4) { animation-delay: .21s; }
+@keyframes c2-rise { to { opacity: 1; transform: none; } }
+#top .hero-author { margin: 0; font-size: 17px; font-weight: 560; letter-spacing: -.005em; color: var(--ink); }
+#top .hero-affil { margin: 3px 0 30px; font-size: 14.5px; color: var(--ink-3); }
+#top .hero-lede {
+  font-size: clamp(16.5px, 1.3vw, 18px); line-height: 1.62; color: var(--ink-2); margin: 0 0 34px;
+  padding-left: 18px; border-left: 2px solid var(--line-2); max-width: 600px;
+}
+#top .hero-lede b { color: var(--ink); font-weight: 620; }
+
+/* ---------------------------------------------------------------- the schematic */
+#top .hero-vis { margin: 0 calc(-1 * clamp(0px, (100vw - 1180px) / 2 + 8px, 170px)) 0 0; min-width: 0; }
+#top .hv-stage { position: relative; aspect-ratio: 640 / 520; container-type: inline-size; }
+#top .hv-stage svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+#top .hv-base, #top .hv-hang, #top .hv-brk { fill: none; stroke: var(--line-2); stroke-width: 1; vector-effect: non-scaling-stroke; }
+#top .hv-brk { stroke: var(--ink-4); }
+#top .hv-thread { fill: none; stroke-width: 2.2; stroke-linecap: round; }
+#top .hv-flow { fill: none; stroke: var(--rra-2); stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 12 108; opacity: 0; }
+#top .hv-tail { fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: .1 7.4; }
+#top .hv-s0 { stop-color: var(--rra); stop-opacity: 0; }
+#top .hv-s1 { stop-color: var(--rra); }
+#top .hv-t1 { stop-color: var(--gold); }
+#top .hv-t0 { stop-color: var(--gold); stop-opacity: 0; }
+#top .hv-node { fill: var(--rra); stroke: var(--bg); stroke-width: 2.6; }
+#top .hv-node.is-wip { fill: var(--bg); stroke: var(--gold); stroke-width: 2; stroke-dasharray: 3.4 3.27; }
+#top .hv-core { fill: var(--gold); }
+#top .hv-halo { fill: var(--gold); opacity: .16; }
+
+#top .hv-labels { list-style: none; margin: 0; padding: 0; }
+#top .hv-labels li { position: absolute; left: var(--x); top: var(--y); transform: translate(calc(-100% - 13px), calc(-100% - 9px)); }
+#top .hv-labels a { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; padding: 3px 6px; margin: -3px -6px; border-radius: 8px; text-decoration: none; white-space: nowrap; }
+#top .hv-labels b {
+  font-family: var(--mono); font-feature-settings: "calt" 0; font-size: 11.5px; font-weight: 600; line-height: 1.5;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink); transition: color .2s;
+}
+#top .hv-labels b i { font-style: normal; color: var(--rra-ink); margin-right: .35em; }
+#top .hv-labels span { font-size: 12.5px; line-height: 1.3; color: var(--ink-3); }
+#top .hv-labels .is-wip b i, #top .hv-labels .is-wip span { color: var(--gold-ink); }
+#top .hv-labels a:hover b { color: var(--rra-ink); }
+#top .hv-layer {
+  position: absolute; left: var(--x); top: 95.4%; transform: translateX(-50%); margin: 0; white-space: nowrap;
+  font-family: var(--mono); font-feature-settings: "calt" 0; font-size: 10.5px; font-weight: 600; line-height: 1.4;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3);
+}
+/* a small drawing has no room for two-line labels: keep the verbs, drop the work names */
+@container (max-width: 540px) { #top .hv-labels span { display: none; } }
+#top .hero-caption {
+  position: absolute; right: 28px; bottom: 30px; z-index: 2; margin: 0;
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 10.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3);
+}
+
+/* draw-in: the thread first, then each node as the line reaches it, then the open end */
+@media (prefers-reduced-motion: no-preference) {
+  #top .hv-base, #top .hv-brk { opacity: 0; animation: c2-fade 1s var(--ease) .15s forwards; }
+  #top .hv-thread { stroke-dasharray: 1; stroke-dashoffset: 1; animation: c2-draw 1.9s cubic-bezier(.4, .15, .3, 1) .35s forwards; }
+  #top .hv-hang { opacity: 0; animation: c2-fade .9s var(--ease) calc(.36s + var(--i) * .38s) forwards; }
+  #top .hv-node, #top .hv-core {
+    opacity: 0; transform: scale(.3); transform-box: fill-box; transform-origin: center;
+    animation: c2-pop .7s var(--ease-out) calc(.3s + var(--i) * .38s) forwards;
+  }
+  #top .hv-tail { opacity: 0; animation: c2-fade .9s var(--ease) 2s forwards; }
+  #top .hv-halo { opacity: 0; transform-box: fill-box; transform-origin: center; animation: c2-breathe 3.6s ease-in-out 2.9s infinite; }
+  #top .hv-flow { animation: c2-fade 1.2s var(--ease) 2.6s forwards, c2-flow 3.4s linear 2.6s infinite; }
+  #top .hv-labels li { opacity: 0; animation: c2-fade .8s var(--ease) calc(.42s + var(--i) * .38s) forwards; }
+  #top .hv-layer { opacity: 0; animation: c2-fade .9s var(--ease) 2.5s forwards; }
+}
+@keyframes c2-draw { to { stroke-dashoffset: 0; } }
+@keyframes c2-fade { to { opacity: 1; } }
+@keyframes c2-pop { to { opacity: 1; transform: none; } }
+@keyframes c2-flow { from { stroke-dashoffset: 120; } to { stroke-dashoffset: 0; } }
+@keyframes c2-breathe { 0%, 100% { opacity: .1; transform: scale(.82); } 50% { opacity: .3; transform: scale(1.08); } }
+
+/* ---------------------------------------------------------------- narrower screens: text over drawing */
+@media (max-width: 1080px) {
+  #top.hero { min-height: 0; padding: calc(var(--nav-h) + 48px) 0 64px; display: block; }
+  #top .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  #top .hero-eyebrow { white-space: normal; text-wrap: balance; }
+  #top .hero-title { font-size: clamp(40px, 7.4vw, 64px); }
+  #top .hero-lede { max-width: 640px; }
+  #top .hero-vis { margin: 0; max-width: 620px; }
+  #top .hero-caption { position: static; margin-top: 18px; }
+}
+@media (max-width: 760px) {
+  #top.hero { padding: calc(var(--nav-h) + 36px) 0 56px; }
+  #top .hero-title { font-size: clamp(27px, 9.3vw, 56px); margin-bottom: 26px; }
+  #top .hero-author { font-size: 16.5px; }
+  #top .hero-affil { margin-bottom: 26px; }
+}
+@media (max-width: 560px) {
+  #top .hv-labels b { font-size: 10.5px; letter-spacing: .1em; }
+  #top .hv-labels b i, #top .hv-labels span { display: none; }
+  #top .hv-labels li { transform: translate(calc(-100% - 8px), calc(-100% - 5px)); }
+  #top .hv-layer { font-size: 9.5px; letter-spacing: .1em; }
+  #top .hero-caption span:last-child { display: none; }
+}
+@media (max-width: 340px) { #top .hero-title .ln { white-space: normal; } }

@@ -1,0 +1,186 @@
+<!-- Chapter 04 · REPRODUCE (#reproduce): ReproBridge. Same template as 03-measure.html.
+     Order: the gap (one worked example), the idea (four parts of a refined artifact), the result (chart and stats),
+     the execution Auditor, the take-away, and the limit (paper and code can still disagree).
+     Wording rules: venue "arXiv preprint, 2026"; always "execution Auditor" (the proposed, unevaluated one in the
+     audit chapter is "the auditor"); "run as released ... nothing warns you" (three of the four agents passed this
+     paper's tasks from the released code, so do not write that released code is never enough); the 238 findings are
+     agent-flagged and not human-validated. The result chart prints only the eight values of Table 3 ("gains": false).
+     Chapter styles: assets/css/reproduce.css. -->
+<section class="sec chapter" id="reproduce" aria-labelledby="reproduce-title">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <p class="ch-label"><span class="sec-no">04 · Reproduce</span><span class="ch-q">Do its experiments re-run?</span></p>
+      <h2 id="reproduce-title">Preserved procedures let fresh agents re-run results</h2>
+      <p class="lede">Run as released, a paper's code can give a wrong number, and nothing warns you. ReproBridge keeps what one reproduction recovers as a <b>refined artifact</b>. With it, mean success of four coding agents rises from <b>76.4%</b> to <b>92.6%</b>.</p>
+    </div>
+
+    <div class="papers" data-reveal>
+      <article class="paper">
+        <div class="paper-top">
+          <span class="k-ic is-neutral" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span>
+          <span class="kicker">Paper · first author</span>
+          <span class="paper-tags"><span class="tag">arXiv preprint, 2026</span></span>
+        </div>
+        <h3>ReproBridge: Building Reproducibility into ML Research Artifacts</h3>
+        <p class="paper-authors"><b>Yubo Wang</b>, Rui Meng, Jaehyun Nam, Tomas Pfister, Jinsung Yoon</p>
+        <div class="paper-links">
+          <a class="btn btn-sm ext" href="https://arxiv.org/abs/2611.08452" target="_blank" rel="noopener">arXiv</a>
+          <a class="btn btn-sm ext" href="https://wyyyb.github.io/reprobridge_website/" target="_blank" rel="noopener">Project page</a>
+        </div>
+      </article>
+    </div>
+
+    <h3 class="sub" data-reveal>The gap: the code runs, the number is wrong</h3>
+    <p class="sub-lede" data-reveal>In one of the 36 papers studied, the release never sorts the <b>10,000</b> validation images into their classes. So every image gets <b>one label</b>. Nothing fails; the training simply runs. One coding agent runs the released code, the run finishes, and the loss is far from the paper's.</p>
+    <div class="chart-card" data-reveal>
+      <div class="chart-head">
+        <div>
+          <h4>With the artifact, the number comes back</h4>
+          <p class="cap">Validation loss: lower is better, and the target is the paper's value. ReproBridge, Appendix D.5.</p>
+        </div>
+        <span class="tag-note">One case · one agent</span>
+      </div>
+      <div class="chart" data-chart="bars" aria-label="Bar chart of validation loss in one case: paper 2.303; released code with Gemini 3.8 Flash 8.898; refined artifact with the same agent 2.288.">
+        <script type="application/json">
+        {
+          "domain": [0, 10],
+          "decimals": 3,
+          "axis": "Validation loss",
+          "legend": false,
+          "rows": [
+            { "label": "Paper", "value": 2.303, "kind": "neutral" },
+            { "label": "Released code, Gemini 3.8 Flash", "value": 8.898, "kind": "flag", "note": "Every validation image gets the same label; no error" },
+            { "label": "Refined artifact, same agent", "value": 2.288, "kind": "ours", "note": "Fresh session; a script sorts the validation images before training" }
+          ]
+        }
+        </script>
+        <noscript><p class="cap">Validation loss: paper 2.303; released code, Gemini 3.8 Flash 8.898; refined artifact, same agent 2.288.</p></noscript>
+      </div>
+    </div>
+    <p class="caveat" data-reveal>One case. Three other agents passed all of this paper's tasks from the released code; this one did not. With the artifact, a script sorts the validation images before training starts, and the same agent, in a fresh session, measures a loss next to the paper's value.</p>
+
+    <h3 class="sub" data-reveal>The idea: keep what one reproduction recovers</h3>
+    <p class="sub-lede" data-reveal>One reproduction already recovers the missing steps, but each fix stays in a chat log or a shell history. ReproBridge keeps them as a <b>reusable artifact</b> the next agent can run, so it does not start from zero. A refined artifact answers four questions.</p>
+    <div class="grid4 r-parts" data-reveal>
+      <article class="k-icard">
+        <span class="k-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M10.5 12l-2 2 2 2M13.5 12l2 2-2 2"/></svg></span>
+        <h4>Refined code</h4>
+        <p>What code do I run?</p>
+      </article>
+      <article class="k-icard">
+        <span class="k-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></span>
+        <h4>Environment</h4>
+        <p>How do I prepare the environment?</p>
+      </article>
+      <article class="k-icard">
+        <span class="k-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M13 15h4"/></svg></span>
+        <h4>Launchers</h4>
+        <p>How do I get the requested number?</p>
+      </article>
+      <article class="k-icard">
+        <span class="k-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg></span>
+        <h4>Guide</h4>
+        <p>Why was each choice made?</p>
+      </article>
+    </div>
+    <p class="cap r-built" data-reveal>Agents build the artifact in three stages, and an independent Reviewer checks every stage.</p>
+
+    <h3 class="sub" data-reveal>Reproduction success rises from 76.4% to 92.6%</h3>
+    <p class="sub-lede" data-reveal>We sampled ICML 2026 Spotlight papers with code and kept <b>36</b>. A task is one number from a main table; five human reproducers confirmed <b>1,029</b> of them. Four coding agents attempt every task in fresh sessions, with the released code or with the refined artifact. A task passes if its number is compatible and really measured.</p>
+    <div class="chart-card" data-reveal>
+      <div class="chart-head">
+        <div>
+          <h4>Released code against the refined artifact, per agent</h4>
+          <p class="cap">Task success on 1,029 tasks from 36 papers. Hollow: released code. Filled: refined artifact. ReproBridge, Table 3.</p>
+        </div>
+        <span class="tag-note">Mean of 3 evaluations</span>
+      </div>
+      <div class="chart" data-chart="dumbbell" aria-label="Dumbbell chart of task success per coding agent, released code to refined artifact: Sonnet 4.6 72.3 to 91.6 percent; Sonnet 5 76.5 to 93.3; Opus 5 89.2 to 94.7; Gemini 3.8 Flash 67.6 to 90.8.">
+        <script type="application/json">
+        {
+          "unit": "%",
+          "domain": [60, 100],
+          "decimals": 1,
+          "axis": "Task success (%)",
+          "from": "Released code",
+          "to": "Refined artifact",
+          "gains": false,
+          "rows": [
+            { "label": "Sonnet 4.6", "from": 72.3, "to": 91.6 },
+            { "label": "Sonnet 5", "from": 76.5, "to": 93.3 },
+            { "label": "Opus 5", "from": 89.2, "to": 94.7 },
+            { "label": "Gemini 3.8 Flash", "from": 67.6, "to": 90.8 }
+          ]
+        }
+        </script>
+        <noscript><p class="cap">Task success, released code to refined artifact: Sonnet 4.6 72.3% to 91.6%; Sonnet 5 76.5% to 93.3%; Opus 5 89.2% to 94.7%; Gemini 3.8 Flash 67.6% to 90.8%.</p></noscript>
+      </div>
+    </div>
+    <div class="stats k-stats" data-reveal>
+      <div class="stat">
+        <div class="n"><span class="from">76.4% →</span>92.6%</div>
+        <div class="l">mean success of four coding agents, released code → refined artifact</div>
+        <span class="tag-note">1,029 tasks · 36 papers</span>
+      </div>
+      <div class="stat">
+        <div class="n">&gt;90<small>%</small></div>
+        <div class="l">every agent, on average, with the artifact; the gain is largest for the weakest agent</div>
+        <span class="tag-note">Mean of 3 evaluations</span>
+      </div>
+    </div>
+    <p class="caveat" data-reveal>Results are on human-written papers. Downstream API spending falls by about a fifth, not counting construction, auditing or GPU cost.</p>
+
+    <h3 class="sub" data-reveal>A matching number is not always a measured one</h3>
+    <p class="sub-lede" data-reveal>In one case, the execution record and the report disagree about the epoch time. The report's value is a projection, written after the run ended. It matched, but it was never measured.</p>
+    <div class="stats k-stats r-pair" data-reveal>
+      <div class="stat">
+        <div class="n">32.5<small>s</small></div>
+        <div class="l">per epoch · in the execution record</div>
+        <span class="tag-note">One case</span>
+      </div>
+      <div class="stat">
+        <div class="n r-red">206<small>s</small></div>
+        <div class="l">per epoch · in the report: a projection written after the run ended</div>
+        <span class="tag-note">ReproBridge, Section 4.6 and Appendix C.5</span>
+      </div>
+    </div>
+
+    <h3 class="sub" data-reveal>An execution Auditor traces each number to its run</h3>
+    <p class="sub-lede" data-reveal>ReproBridge has an <b>execution Auditor</b>, itself an agent, which follows every reported number back to its run. We checked it against two human reviewers. Its flags are mostly right, and it misses about one invalid outcome in five.</p>
+    <div class="stats k-stats" data-reveal>
+      <div class="stat">
+        <div class="n">88.6%</div>
+        <div class="l">precision · 31 of 35 flags confirmed</div>
+        <span class="tag-note">818 outcomes · 8 papers · two human reviewers</span>
+      </div>
+      <div class="stat">
+        <div class="n">79.5%</div>
+        <div class="l">recall · 31 of 39 invalid outcomes caught</div>
+        <span class="tag-note">818 outcomes · 8 papers · two human reviewers</span>
+      </div>
+    </div>
+    <div class="note r-nofb" data-reveal><span class="note-title">One limit</span>It gives <b>no feedback</b> to the agent: what it finds never goes back. The success rates above count only results that it does not invalidate. ReproBridge, Sections 4.1 and 4.6.</div>
+
+    <div class="takeaway" data-reveal>
+      <span class="takeaway-k">Take-away</span>
+      <p>Preserved procedures let fresh agents <b>re-run results</b>. Carried forward: <b>execution evidence + an execution Auditor</b>.</p>
+    </div>
+
+    <h3 class="sub" data-reveal>Still open: paper and code can still disagree</h3>
+    <p class="sub-lede" data-reveal>The number matches, but does the paper say what the code does? In one paper, the text states one learning rate. The released code uses another, ten times larger.</p>
+    <div class="stats k-stats r-pair" data-reveal>
+      <div class="stat">
+        <div class="n">1e-4</div>
+        <div class="l">learning rate · in the paper</div>
+        <span class="tag-note">One of the 36 papers</span>
+      </div>
+      <div class="stat">
+        <div class="n r-red">1e-3</div>
+        <div class="l">learning rate · in the released code</div>
+        <span class="tag-note">ReproBridge, Section 6.2</span>
+      </div>
+    </div>
+    <blockquote class="insight r-quote" data-reveal>“Numerical compatibility does <b>not certify scientific validity</b>” <span class="insight-src">ReproBridge, Section 6.3</span></blockquote>
+    <p class="caveat" data-reveal>This case is one of 238 agent-flagged findings touching 669 tasks. Agents produced them and no human validated them, so we cannot tell how many are right. That is the gap.</p>
+  </div>
+</section>

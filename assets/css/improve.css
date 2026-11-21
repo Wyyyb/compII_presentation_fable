@@ -1,0 +1,26 @@
+/* Chapter 02 · Improve (#improve): chapter-only styles. Violet = whoever judges (teacher, answer key). */
+
+/* the gap: the question picture beside the annotator's sentence */
+#improve .im-gap { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: center; gap: 28px 44px; }
+#improve .im-quote { margin: 0; --qc: var(--violet); }
+#improve .im-quote p { font-size: clamp(19px, 1.8vw, 23px); line-height: 1.45; letter-spacing: -.01em; }
+#improve .im-quote footer { margin-top: 12px; font-size: 13px; line-height: 1.5; color: var(--ink-3); }
+#improve mark { padding: 0 .12em; border-radius: 4px; background: var(--violet-tint); color: var(--violet-ink); font-weight: 600; }
+@media (max-width: 860px) { #improve .im-gap { grid-template-columns: minmax(0, 1fr); } }
+
+/* the idea: input -> target -> at test time */
+#improve .im-pipe li span:not(.k-pipe-n) { font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
+#improve .im-pipe li.is-judge { border-color: color-mix(in srgb, var(--violet) 40%, var(--line)); background: color-mix(in srgb, var(--violet-tint) 55%, var(--bg)); }
+#improve .im-pipe li.is-judge .k-pipe-n { background: var(--violet); color: var(--bg); }
+#improve .im-pipe + .caveat { margin-top: 16px; }
+@media (max-width: 1080px) { #improve .im-pipe { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { #improve .im-pipe { grid-template-columns: minmax(0, 1fr); } }
+
+/* what stays open: who judged (two violet judge cards, the student plain) */
+#improve .im-judges { list-style: none; margin: 0; padding: 0; }
+#improve .im-j { padding: 20px 22px; border-radius: var(--rad-lg); border: 1px solid var(--line); background: var(--bg); }
+#improve .im-j.is-judge { border-color: color-mix(in srgb, var(--violet) 40%, var(--line)); background: color-mix(in srgb, var(--violet-tint) 55%, var(--bg)); }
+#improve .im-j-k { display: block; margin-bottom: 6px; font-family: var(--mono); font-size: 11.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+#improve .im-j.is-judge .im-j-k { color: var(--violet-ink); }
+#improve .im-j p { margin: 0; font-size: 18px; font-weight: 550; letter-spacing: -.01em; color: var(--ink); }
+#improve .im-after { margin-top: 24px; }

@@ -1,0 +1,8 @@
+/* Bridge 4 · Reproduce -> Audit: the next node is in progress (gold dashed ring), not a finished chapter. */
+#bridge-4 .rail5 .is-next.is-wip i {
+  border: 2px dashed var(--gold); background: var(--bg-soft);
+  box-shadow: 0 0 0 3px var(--ring), 0 0 0 8px color-mix(in srgb, var(--gold) 18%, transparent);
+  animation: none;
+}
+#bridge-4 .rail5 .is-next.is-wip i::after { inset: 3.5px; background: color-mix(in srgb, var(--gold) 55%, transparent); }
+#bridge-4 .rail5 .is-next.is-wip span b { color: var(--gold-ink); }

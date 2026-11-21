@@ -1,0 +1,136 @@
+<!-- Chapter 01 · MEASURE (#measure): MMLU-Pro. The chapter template, in order:
+       sec-head (ch-label + claim headline + lede)  ->  paper card  ->  the gap (one example)  ->  the idea (figure)
+       ->  the evidence (chart card + stats row)  ->  take-away  ->  still open (leads into bridge 1).
+     Numbers: MMLU and MMLU-Pro scores from MMLU-Pro Figure 4 and Table 2; prompt swing from Figure 5; error shares
+     from the error analysis (p. 7); the question card from Table 10 (question shortened, options as printed).
+     Qualifiers to keep: "these three models" (GPT-4o, Claude-3-Opus, GPT-4-Turbo; they are not the three best of
+     Table 2), the past tense of the take-away, 39% faulty reasoning against 35% missing knowledge (a near tie).
+     Charts: the JSON block inside <div class="chart" data-chart="bars|dumbbell"> is the only thing to edit;
+     README.md lists the fields. -->
+<section class="sec chapter" id="measure" aria-labelledby="measure-title">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <p class="ch-label"><span class="sec-no">01 · Measure</span><span class="ch-q">Can we measure what the model can really do?</span></p>
+      <h2 id="measure-title">In 2024, <span class="nowrap">MMLU-Pro</span> separated the best models again</h2>
+      <p class="lede">A research agent runs on a language model, so the thread starts with the model. By 2024 the standard exam, MMLU, could no longer tell the best models apart. MMLU-Pro made the exam <b>harder to guess</b>, then <b>tested the exam itself</b>.</p>
+    </div>
+
+    <div class="papers" data-reveal>
+      <article class="paper">
+        <div class="paper-top">
+          <span class="k-ic is-neutral" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span>
+          <span class="kicker">Paper · first author</span>
+          <span class="paper-tags"><span class="tag rra">NeurIPS 2024 D&amp;B</span><span class="tag rra">Spotlight</span></span>
+        </div>
+        <h3>MMLU-Pro: A More Robust and Challenging <span class="nowrap">Multi-Task</span> Language Understanding Benchmark</h3>
+        <p class="paper-authors"><b>Yubo Wang</b>*, Xueguang Ma*, Ge Zhang, Yuansheng Ni, Abhranil Chandra, Shiguang Guo, Weiming Ren, Aaran Arulraj, Xuan He, Ziyan Jiang, Tianle Li, Max Ku, Kai Wang, Alex Zhuang, Rongqi Fan, Xiang Yue, Wenhu Chen*</p>
+        <p class="paper-note">* Core Contributors</p>
+        <div class="paper-links">
+          <a class="btn btn-sm ext" href="https://arxiv.org/abs/2406.01574" target="_blank" rel="noopener">arXiv</a>
+          <a class="btn btn-sm ext" href="https://github.com/TIGER-AI-Lab/MMLU-Pro" target="_blank" rel="noopener">Code</a>
+          <a class="btn btn-sm ext" href="https://huggingface.co/datasets/TIGER-Lab/MMLU-Pro" target="_blank" rel="noopener">Dataset</a>
+        </div>
+      </article>
+    </div>
+
+    <h3 class="sub" data-reveal>The gap: on MMLU, the best models sat two points apart</h3>
+    <p class="sub-lede" data-reveal>As of May 2024, GPT-4o scored <b>88.7%</b> on MMLU, Claude-3-Opus <b>86.8%</b> and GPT-4-Turbo <b>86.5%</b>. A two-point gap is smaller than what rewording the prompt does to an MMLU score, for the small models we tested. The exam could no longer tell these models apart.</p>
+
+    <h3 class="sub" data-reveal>The idea: make the exam harder to guess, then test the exam</h3>
+    <p class="sub-lede" data-reveal>Questions that small models already answer are removed. College-level problems that need several reasoning steps are added. Each question gets more answer options, so a lucky guess rarely works. Human experts review the items in two rounds.</p>
+    <figure class="fig" data-reveal>
+      <div class="fig-frame pad">
+        <picture>
+          <source media="(max-width: 640px)" srcset="assets/img/fig/measure-pipeline-stacked.webp" width="1320" height="718">
+          <img src="assets/img/fig/measure-pipeline.webp" width="2400" height="359" loading="lazy" decoding="async" alt="Pipeline of six steps joined by arrows: original MMLU, initial filtering, question collection and integration, option augmentation, expert review, MMLU-Pro." data-zoom="assets/img/fig/measure-pipeline.webp" data-title="MMLU-Pro: construction pipeline">
+        </picture>
+        <button class="zoom-btn" type="button" data-zoom="assets/img/fig/measure-pipeline.webp" data-title="MMLU-Pro: construction pipeline">Zoom</button>
+      </div>
+      <figcaption><b>Construction pipeline.</b> The result: 12,032 questions in 14 disciplines, with up to 10 options instead of 4, reviewed by experts. MMLU-Pro, Figure 2.</figcaption>
+    </figure>
+
+    <h3 class="sub" data-reveal>Then test the exam: the same models spread out again</h3>
+    <p class="sub-lede" data-reveal>Every model scores lower on MMLU-Pro, so the new exam is harder. The gap between the same three models is about four times as wide, and the best model of that time still missed more than a quarter of the questions.</p>
+    <div class="chart-card" data-reveal>
+      <div class="chart-head">
+        <div>
+          <h4>The same five models on MMLU and on MMLU-Pro</h4>
+          <p class="cap">Accuracy (%). Outlined bars: MMLU. Filled bars: MMLU-Pro.</p>
+        </div>
+        <span class="tag-note">As of May 2024</span>
+      </div>
+      <div class="chart" data-chart="bars" aria-label="Bar chart of accuracy on MMLU and MMLU-Pro for five models. MMLU: GPT-4o 88.7, Claude-3-Opus 86.8, GPT-4-Turbo 86.5, Llama-3-70B-Instruct 82.0, Gemini-1.5-Flash 78.9. MMLU-Pro: 72.6, 68.5, 63.7, 56.2, 59.1.">
+        <script type="application/json">
+        {
+          "unit": "%",
+          "domain": [0, 100],
+          "decimals": 1,
+          "axis": "Accuracy (%)",
+          "kinds": { "base": "MMLU", "ours": "MMLU-Pro" },
+          "rows": [
+            { "label": "GPT-4o · MMLU", "value": 88.7, "kind": "base" },
+            { "label": "GPT-4o · MMLU-Pro", "value": 72.6, "kind": "ours" },
+            { "label": "Claude-3-Opus · MMLU", "value": 86.8, "kind": "base" },
+            { "label": "Claude-3-Opus · MMLU-Pro", "value": 68.5, "kind": "ours" },
+            { "label": "GPT-4-Turbo · MMLU", "value": 86.5, "kind": "base" },
+            { "label": "GPT-4-Turbo · MMLU-Pro", "value": 63.7, "kind": "ours" },
+            { "label": "Llama-3-70B-Instruct · MMLU", "value": 82.0, "kind": "base" },
+            { "label": "Llama-3-70B-Instruct · MMLU-Pro", "value": 56.2, "kind": "ours" },
+            { "label": "Gemini-1.5-Flash · MMLU", "value": 78.9, "kind": "base" },
+            { "label": "Gemini-1.5-Flash · MMLU-Pro", "value": 59.1, "kind": "ours" }
+          ]
+        }
+        </script>
+        <noscript><p class="cap">MMLU against MMLU-Pro: GPT-4o 88.7% and 72.6%; Claude-3-Opus 86.8% and 68.5%; GPT-4-Turbo 86.5% and 63.7%; Llama-3-70B-Instruct 82.0% and 56.2%; Gemini-1.5-Flash 78.9% and 59.1%.</p></noscript>
+      </div>
+      <p class="caveat">MMLU-Pro, Figure 4 and Table 2.</p>
+    </div>
+
+    <div class="stats k-stats" data-reveal>
+      <div class="stat">
+        <div class="n"><span class="from">≈2 →</span>≈9</div>
+        <div class="l">points between the same three models: GPT-4o, Claude-3-Opus, GPT-4-Turbo</div>
+        <span class="tag-note">MMLU → MMLU-Pro · May 2024</span>
+      </div>
+      <div class="stat">
+        <div class="n">12,032</div>
+        <div class="l">questions in 14 disciplines, with up to 10 options instead of 4</div>
+        <span class="tag-note">Expert-reviewed in two rounds</span>
+      </div>
+      <div class="stat">
+        <div class="n"><small class="ms-pre">about</small>half</div>
+        <div class="l">as far as on MMLU: how much the score swings across 24 prompts</div>
+        <span class="tag-note">6 small open models</span>
+      </div>
+    </div>
+    <p class="caveat" data-reveal>The prompt test covers six small open models (7B to 8B), not the frontier models above.</p>
+
+    <div class="takeaway" data-reveal>
+      <span class="takeaway-k">Take-away</span>
+      <p>In 2024, MMLU-Pro <b>separated the best models again</b>. Two years later its top is compressing too. What lasts is the habit: <b>before trusting a score, test the measurement itself</b>. Carried forward: robust evaluation.</p>
+    </div>
+
+    <h3 class="sub" data-reveal>Still open: the largest group of errors is reasoning</h3>
+    <p class="sub-lede" data-reveal>For a random sample of GPT-4o's wrong answers, experts labelled the cause. <b>39%</b> are faulty reasoning; missing knowledge is a close second at <b>35%</b>. In the example below the key says H. The model reasons step by step, and then answers B.</p>
+    <figure class="fig qcard" data-reveal>
+      <div class="qcard-body">
+        <p class="qcard-k">MMLU-Pro question · Engineering</p>
+        <p class="qcard-q">Minimum force on a piston that makes the water boil</p>
+        <ol class="qcard-opts" aria-label="Ten answer options. H is the answer key. GPT-4o chose B.">
+          <li><span><b>A</b> 3.12 kN</span></li>
+          <li class="is-model"><span><b>B</b> 7.2 kN</span><span class="qcard-tag">GPT-4o answers</span></li>
+          <li><span><b>C</b> 5.02 kN</span></li>
+          <li><span><b>D</b> 4.00 kN</span></li>
+          <li><span><b>E</b> 6.75 kN</span></li>
+          <li><span><b>F</b> 1.95 kN</span></li>
+          <li><span><b>G</b> 2.86 kN</span></li>
+          <li class="is-key"><span><b>H</b> 4.86 kN</span><span class="qcard-tag">Answer key</span></li>
+          <li><span><b>I</b> 5.5 kN</span></li>
+          <li><span><b>J</b> 3.98 kN</span></li>
+        </ol>
+      </div>
+      <figcaption><b>One of the analysed errors.</b> Question shortened to one line; the ten options are as printed. MMLU-Pro, error analysis (p. 7) and Table 10.</figcaption>
+    </figure>
+    <p class="caveat" data-reveal>Shares are of 120 analysed GPT-4o errors; the remaining errors fall into other groups. A benchmark can show where a model fails. It cannot fix it.</p>
+  </div>
+</section>

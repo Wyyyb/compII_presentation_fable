@@ -1,0 +1,211 @@
+/* Audit (#audit): the work-in-progress chapter. Adds to the chapter template:
+ *   .judgments      the three judgment chips under the lede
+ *   .sub-row        a sub-heading with a status tag beside it
+ *   .audit-view     three numbered step headers (.steps3) above one framed schematic (.audit-shot)
+ *   .rq             research-question cards        .study   planned-study cards with a dotted well
+ *   .synth          the synthesis strip: four completed works -> two research questions
+ *   .gap-case       the illustration (two checks, one red defect)   .loop  the proposed loop of four stages
+ *   .exists         related work rows   .hyp / .facts3  hypothesis and planning targets inside a study card
+ *   .crit / .hyp-banner  "critique returns" cards and the hypothesis banner */
+#audit .judgments { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; }
+#audit .judgments .tag { font-size: 11.5px; padding: 4px 11px; }
+#audit .sub-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 96px 0 12px; }
+#audit .sub-row h3.sub { margin: 0; }
+
+/* ---------------------------------------------------------------- three steps above one screenshot */
+#audit .audit-view { margin-top: 36px; }
+#audit .steps3 { list-style: none; margin: 0 0 20px; padding: 0; display: grid; grid-template-columns: 27.4fr 39.4fr 33.2fr; }
+#audit .steps3 li { --sc: var(--st-specify); --sk: var(--rra-ink); display: flex; align-items: flex-start; gap: 12px; min-width: 0; padding: 0 20px 0 2px; }
+#audit .steps3 li[data-s="2"] { --sc: var(--st-execute); --sk: var(--raw-ink); }
+#audit .steps3 li[data-s="3"] { --sc: var(--st-preserve); --sk: var(--gold-ink); }
+#audit .steps3-n {
+  flex: none; display: inline-grid; place-items: center; width: 28px; height: 28px; margin-top: 1px; border-radius: 50%;
+  background: var(--sc); color: #fff; font-family: var(--mono); font-size: 13.5px; font-weight: 700;
+}
+:root[data-theme="dark"] #audit .steps3-n { color: var(--bg); }
+#audit .steps3 b { display: block; font-size: clamp(18px, 1.7vw, 22px); font-weight: 600; letter-spacing: -.016em; line-height: 1.25; color: var(--sk); }
+#audit .steps3 div span { display: block; margin-top: 3px; font-size: 14.5px; line-height: 1.45; color: var(--ink-3); text-wrap: pretty; }
+#audit .audit-shot .k-win { border-color: var(--line); }
+#audit .audit-shot-img { position: relative; background: var(--fig-mat); }
+#audit .audit-shot-img img { display: block; width: 100%; height: auto; }
+#audit .audit-shot-img:hover .zoom-btn, #audit .audit-shot-img .zoom-btn:focus-visible { opacity: 1; }
+#audit .schem-note { display: flex; align-items: baseline; gap: 14px; max-width: none; margin-top: 16px; }
+#audit .schem-note .tag-note { flex: none; transform: translateY(-1px); }
+
+/* ---------------------------------------------------------------- research questions, studies */
+#audit .rq, #audit .study { display: flex; flex-direction: column; min-width: 0; padding: 28px 30px 24px; border-radius: var(--rad-lg); background: var(--bg); border: 1px solid var(--line); }
+#audit .rq-top, #audit .study-top { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+#audit .rq-no {
+  display: inline-grid; place-items: center; height: 26px; padding: 0 10px; border-radius: 999px; background: var(--block); color: var(--on-block);
+  font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .06em;
+}
+#audit .rq h4, #audit .study h4 { margin: 0 0 10px; font-size: clamp(21px, 1.95vw, 25px); font-weight: 580; letter-spacing: -.02em; line-height: 1.22; text-wrap: balance; }
+#audit .rq p, #audit .study p { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--ink-2); }
+#audit .rq-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: auto; padding-top: 18px; border-top: 1px solid var(--line); }
+#audit .rq > p { margin-bottom: 22px; }
+#audit .rq-foot a.tag { text-decoration: none; transition: background-color .2s, color .2s; }
+#audit .rq-foot a.tag:hover { background: var(--rra-tint); color: var(--rra-ink); }
+#audit .study { border: 1.5px dashed var(--line-2); padding: 27.5px 29.5px 23.5px; }
+#audit .study-top .tag-note { margin-left: auto; }
+#audit .study-well {
+  list-style: none; margin: 20px 0 22px; padding: 8px 16px; border-radius: var(--rad); background-color: var(--panel);
+  background-image: radial-gradient(var(--dot) .9px, transparent 1.2px); background-size: 12px 12px; background-position: 6px 6px;
+}
+#audit .study-well li { display: grid; grid-template-columns: 86px minmax(0, 1fr); align-items: baseline; gap: 14px; padding: 10px 0; font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
+#audit .study-well li + li { border-top: 1px solid var(--line); }
+#audit .study-k { font-family: var(--mono); font-feature-settings: "calt" 0; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+#audit .study-k.is-on { color: var(--rra-ink); }
+
+/* ---------------------------------------------------------------- synthesis strip */
+#audit .synth { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+#audit .synth-cell { display: flex; flex-direction: column; min-width: 0; padding: 24px 20px 22px; border-right: 1px solid var(--line); color: inherit; text-decoration: none; transition: background-color .25s; }
+#audit .synth-cell:first-child { padding-left: 0; }
+#audit .synth-cell:last-child { border-right: 0; }
+#audit .synth-cell:hover { background: var(--bg-soft); }
+#audit .synth-k { font-family: var(--mono); font-feature-settings: "calt" 0; font-size: 11.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+#audit .synth-k b { margin-right: .5em; color: var(--rra-ink); font-weight: 600; }
+#audit .synth-t { margin-top: 12px; font-size: clamp(17px, 1.5vw, 19.5px); font-weight: 580; letter-spacing: -.014em; line-height: 1.25; color: var(--ink); text-wrap: balance; }
+#audit .synth-d { margin-top: 6px; font-size: 13.5px; line-height: 1.45; color: var(--ink-3); }
+/* a short arrow leads from the work to the question it feeds */
+#audit .synth-to { display: flex; align-items: center; gap: 10px; margin-top: auto; padding-top: 18px; }
+#audit .synth-to::before { content: ""; flex: none; width: 26px; height: 0; border-top: 1.5px solid var(--ink-4); }
+#audit .synth-to .tag { position: relative; }
+#audit .synth-to .tag::before { content: ""; position: absolute; left: -16px; top: 50%; width: 6px; height: 6px; margin-top: -3.75px; border-top: 1.5px solid var(--ink-4); border-right: 1.5px solid var(--ink-4); transform: rotate(45deg); }
+
+
+/* ---------------------------------------------------------------- the gap, as one illustration */
+#audit .gap-case { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); align-items: center; gap: 20px 40px; padding: 8px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+#audit .gap-rows { list-style: none; margin: 0; padding: 0; }
+#audit .gap-rows li { display: grid; grid-template-columns: 36px minmax(0, 1fr); align-items: center; column-gap: 16px; padding: 14px 0; }
+#audit .gap-rows li + li { border-top: 1px solid var(--line); }
+#audit .gap-rows b { font-size: 17px; font-weight: 600; letter-spacing: -.01em; color: var(--ink); }
+#audit .gap-rows li > span:not(.gap-ic) { grid-column: 2; margin-top: 2px; font-size: 14.5px; color: var(--ink-2); }
+#audit .gap-rows li > span b { font-size: inherit; }
+#audit .gap-ic { grid-row: span 2; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: var(--rra-tint); color: var(--rra-ink); }
+#audit .gap-ic svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+#audit .is-bad .gap-ic { background: var(--red-tint); color: var(--red-ink); }
+#audit .is-bad > b { color: var(--red-ink); }
+#audit .gap-note { margin: 0; padding-left: 22px; border-left: 2px solid var(--gold); font-size: 17px; line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+#audit .gap-note b { color: var(--gold-ink); font-weight: 620; }
+
+/* ---------------------------------------------------------------- the proposed loop (the proposal's Figure 5.1, redrawn in HTML) */
+#audit .loop-fig { margin-top: 8px; }
+#audit .loop {
+  display: grid; grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr); grid-template-rows: auto 44px auto;
+  grid-template-areas: "b1 r b2" "u . d" "b4 l b3"; padding: 28px; border-radius: var(--rad-lg); background: var(--bg-soft); border: 1px solid var(--line);
+}
+#audit .loop-box {
+  --sc: var(--st-specify); display: flex; align-items: center; gap: 14px; min-width: 0; padding: 18px 20px; border-radius: var(--rad);
+  background: var(--bg); border: 1px solid color-mix(in srgb, var(--sc) 30%, var(--line));
+}
+#audit .loop-box[data-s="1"] { grid-area: b1; }
+#audit .loop-box[data-s="2"] { grid-area: b2; --sc: var(--st-execute); }
+#audit .loop-box[data-s="3"] { grid-area: b3; --sc: var(--st-preserve); }
+#audit .loop-box[data-s="4"] { grid-area: b4; --sc: var(--st-review); background: var(--violet-tint); border-color: color-mix(in srgb, var(--violet) 55%, var(--line)); }
+#audit .loop-n { flex: none; display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--sc); color: #fff; font-family: var(--mono); font-size: 13px; font-weight: 700; }
+:root[data-theme="dark"] #audit .loop-n { color: var(--bg); }
+#audit .loop-box b { display: block; font-size: clamp(16px, 1.5vw, 19px); font-weight: 600; letter-spacing: -.012em; line-height: 1.25; color: var(--ink); }
+#audit .loop-box span:not(.loop-n) { display: block; margin-top: 2px; font-size: 14px; color: var(--ink-3); }
+#audit .loop-ar { position: relative; display: block; align-self: center; justify-self: center; }
+#audit .loop-ar::after { content: ""; position: absolute; width: 7px; height: 7px; border-top: 1.5px solid var(--ink-3); border-right: 1.5px solid var(--ink-3); }
+#audit .ar-r, #audit .ar-l { width: 40px; height: 0; border-top: 1.5px solid var(--ink-3); }
+#audit .ar-d, #audit .ar-u { width: 0; height: 30px; border-left: 1.5px solid var(--ink-3); }
+#audit .ar-r { grid-area: r; } #audit .ar-l { grid-area: l; } #audit .ar-d { grid-area: d; } #audit .ar-u { grid-area: u; }
+#audit .ar-r::after { right: 0; top: -4.6px; transform: rotate(45deg); }
+#audit .ar-l::after { left: 0; top: -4.6px; transform: rotate(-135deg); }
+#audit .ar-d::after { bottom: 0; left: -4.6px; transform: rotate(135deg); }
+#audit .ar-u::after { top: 0; left: -4.6px; transform: rotate(-45deg); }
+#audit .ar-u, #audit .ar-u::after { border-color: var(--violet); }
+#audit .loop-back { display: none; }
+#audit .loop-notes { margin-top: 28px; }
+#audit .loop-notes p { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--ink-2); text-wrap: pretty; }
+#audit .loop-notes b { color: var(--ink); font-weight: 620; }
+
+/* ---------------------------------------------------------------- what exists (related work) */
+#audit .exists { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+#audit .exists li { display: grid; grid-template-columns: 22px minmax(0, 1fr) minmax(0, 1fr); align-items: baseline; gap: 4px 18px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+#audit .ex-mk { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid var(--raw); transform: translateY(2px); }
+#audit .exists b { font-size: 17px; font-weight: 600; letter-spacing: -.01em; color: var(--ink); }
+#audit .exists span { font-size: 15px; color: var(--ink-3); }
+#audit .exists .is-gap { padding: 18px 18px 18px 14px; margin-top: 10px; border: 1px solid color-mix(in srgb, var(--rra) 35%, var(--line)); border-radius: var(--rad); background: color-mix(in srgb, var(--rra-tint) 60%, var(--bg)); }
+#audit .exists .is-gap .ex-mk { border: 0; background: var(--rra); }
+#audit .exists .is-gap b { color: var(--rra-ink); }
+#audit .exists .is-gap span { color: var(--ink-2); }
+
+/* ---------------------------------------------------------------- hypotheses and planning targets inside the study cards */
+#audit .studies { align-items: stretch; }
+#audit .hyp { margin: 0 0 18px; padding: 14px 16px; border-radius: var(--rad); border: 1px solid color-mix(in srgb, var(--gold) 45%, var(--line)); background: color-mix(in srgb, var(--gold-tint) 70%, var(--bg)); }
+#audit .hyp .kicker { display: block; margin-bottom: 6px; color: var(--gold-ink); font-weight: 600; }
+#audit .study .hyp p { font-size: 16.5px; line-height: 1.45; color: var(--ink); }
+#audit .hyp b { font-weight: 640; }
+#audit .facts3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0 0 14px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+#audit .facts3 > div { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; min-width: 0; padding: 14px 12px 14px 0; }
+#audit .facts3 > div + div { padding-left: 14px; border-left: 1px solid var(--line); }
+#audit .facts3 dt { font-size: clamp(28px, 2.6vw, 36px); font-weight: 520; letter-spacing: -.035em; line-height: 1; font-variant-numeric: tabular-nums; color: var(--ink); }
+#audit .facts3 .is-ref dt { color: var(--violet-ink); }
+#audit .facts3 dd { margin: 0; flex: 1 1 auto; font-size: 13.5px; line-height: 1.4; color: var(--ink-3); text-wrap: pretty; }
+#audit .facts3 .tag { font-size: 10px; padding: 2px 8px; }
+#audit .study .study-fine { margin: 0 0 6px; font-size: 13.5px; line-height: 1.5; color: var(--ink-3); }
+#audit .study-well li { grid-template-columns: 76px minmax(0, 1fr); }
+/* side by side, the two study cards share their eight rows, so hypothesis lines up with hypothesis and targets with targets */
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 861px) {
+    #audit .study { display: grid; grid-template-rows: subgrid; grid-row: span 8; row-gap: 0; }
+  }
+}
+
+/* ---------------------------------------------------------------- critique returns (the link back to chapter 02) */
+#audit .crit-card { display: flex; flex-direction: column; gap: 6px; padding: 20px 22px; border-radius: var(--rad-lg); border: 1px solid var(--line); background: var(--bg); }
+#audit .crit-card b { font-size: 17.5px; font-weight: 600; letter-spacing: -.01em; color: var(--ink); }
+#audit .crit-card p { margin: 0; font-size: 15px; line-height: 1.55; color: var(--ink-2); }
+#audit .crit-card.is-on { border-color: color-mix(in srgb, var(--rra) 40%, var(--line)); background: color-mix(in srgb, var(--rra-tint) 55%, var(--bg)); }
+#audit .crit-card.is-on b { color: var(--rra-ink); }
+#audit .hyp-banner { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; margin-top: 16px; padding: 16px 22px; border-radius: var(--rad); border: 1.5px dashed color-mix(in srgb, var(--gold) 60%, var(--line)); background: color-mix(in srgb, var(--gold-tint) 70%, var(--bg)); }
+#audit .hyp-banner .kicker { color: var(--gold-ink); font-weight: 600; }
+#audit .hyp-banner p { margin: 0; flex: 1 1 320px; font-size: 16px; line-height: 1.5; color: var(--ink); }
+
+/* ---------------------------------------------------------------- synthesis: role tag per work; the hypothesis is dashed gold */
+#audit .synth-tag { margin-top: 12px; }
+#audit .synth-tag + .synth-t { margin-top: 10px; }
+#audit .synth-cell.is-hyp .synth-to::before { border-top: 1.5px dashed var(--gold); }
+#audit .synth-cell.is-hyp .synth-to .tag::before { border-color: var(--gold); }
+
+@media (max-width: 1080px) {
+  #audit .synth { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #audit .synth-cell:nth-child(2n) { border-right: 0; }
+  #audit .synth-cell:nth-child(2n+1) { padding-left: 0; }
+  #audit .synth-cell:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+}
+@media (max-width: 860px) {
+  #audit .gap-case { grid-template-columns: minmax(0, 1fr); padding-bottom: 20px; }
+  #audit .exists li { grid-template-columns: 22px minmax(0, 1fr); }
+  #audit .exists span { grid-column: 2; }
+  #audit .crit { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  #audit .studies { grid-template-columns: minmax(0, 1fr); }
+  #audit .steps3 { grid-template-columns: minmax(0, 1fr); gap: 14px; margin-bottom: 24px; }
+  #audit .steps3 li { padding: 0; }
+}
+@media (max-width: 760px) {
+  #audit .sub-row { margin-top: 72px; }
+  #audit .rq, #audit .study { padding: 22px 22px 20px; }
+  #audit .study { padding: 21.5px 21.5px 19.5px; }
+  #audit .schem-note { flex-direction: column; gap: 8px; }
+}
+@media (max-width: 640px) {
+  #audit .loop { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; grid-template-areas: none; row-gap: 0; padding: 18px; }
+  #audit .loop-box { grid-area: auto !important; }
+  #audit .loop-ar { grid-area: auto !important; width: 0; height: 22px; margin: 6px 0; border-top: 0; border-left: 1.5px solid var(--ink-3); }
+  #audit .loop-ar::after { top: auto; right: auto; bottom: 0; left: -4.6px; transform: rotate(135deg); }
+  #audit .ar-u { display: none; }
+  #audit .loop-back { display: block; margin-top: 12px; font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--violet-ink); }
+  #audit .facts3 { grid-template-columns: minmax(0, 1fr); }
+  #audit .facts3 > div { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; align-items: center; column-gap: 12px; padding: 10px 0; }
+  #audit .facts3 > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
+  #audit .facts3 dt { font-size: 28px; }
+}
+@media (max-width: 560px) {
+  #audit .synth { grid-template-columns: minmax(0, 1fr); }
+  #audit .synth-cell { padding: 20px 0; border-right: 0; border-bottom: 1px solid var(--line); }
+  #audit .synth-cell:last-child { border-bottom: 0; }
+  #audit .study-well li { grid-template-columns: 74px minmax(0, 1fr); gap: 10px; }
+}

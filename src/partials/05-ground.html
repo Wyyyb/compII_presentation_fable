@@ -1,0 +1,136 @@
+<!-- Chapter 03 · GROUND (#ground): ScholarCopilot. Same template as 03-measure.html.
+     Order: the gap (two single cases: GPT-4o first, then the model with retrieval), the idea (Figure 1), the
+     evidence (the Recall@1 chart, then the stats row with a small user study, N = 10), the take-away, and what is
+     not checked yet.
+     Wording rules: the GPT-4o entry is "its own reference list" (the paper does not say whether GPT-4o had
+     retrieval, so the page does not say it either); the two cases are single cases; the baselines are "off the
+     shelf" and query with the last sentence (they are not called strong); always "a small user study".
+     Chapter styles: assets/css/ground.css. -->
+<section class="sec chapter" id="ground" aria-labelledby="ground-title">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <p class="ch-label"><span class="sec-no">03 · Ground</span><span class="ch-q">Is what it writes tied to real sources?</span></p>
+      <h2 id="ground-title">The model looks up real papers while it writes</h2>
+      <p class="lede">A reference is a fact outside the model. It has to be looked up. ScholarCopilot is <b>one 7B model</b> that writes and retrieves: when a citation is due, it looks the paper up itself. Its first suggestion is the cited paper <b>40.1%</b> of the time.</p>
+    </div>
+
+    <div class="papers" data-reveal>
+      <article class="paper">
+        <div class="paper-top">
+          <span class="k-ic is-neutral" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span>
+          <span class="kicker">Paper · first author</span>
+          <span class="paper-tags"><span class="tag rra">COLM 2025</span></span>
+        </div>
+        <h3>ScholarCopilot: Training Large Language Models for Academic Writing with Accurate Citations</h3>
+        <p class="paper-authors"><b>Yubo Wang</b>†, Xueguang Ma†, Ping Nie, Huaye Zeng, Zhiheng Lyu, Yuxuan Zhang, Benjamin Schneider, Yi Lu, Xiang Yue, Wenhu Chen†</p>
+        <p class="paper-note">† Core Contributors</p>
+        <div class="paper-links">
+          <a class="btn btn-sm ext" href="https://arxiv.org/abs/2504.00824" target="_blank" rel="noopener">arXiv</a>
+          <a class="btn btn-sm ext" href="https://tiger-ai-lab.github.io/ScholarCopilot/" target="_blank" rel="noopener">Project page</a>
+          <a class="btn btn-sm ext" href="https://github.com/TIGER-AI-Lab/ScholarCopilot" target="_blank" rel="noopener">Code</a>
+          <a class="btn btn-sm ext" href="https://huggingface.co/TIGER-Lab/ScholarCopilot-v1" target="_blank" rel="noopener">Model</a>
+        </div>
+      </article>
+    </div>
+
+    <h3 class="sub" data-reveal>The gap: references that look right and are not</h3>
+    <p class="sub-lede" data-reveal>Two things strong models do with the literature. First, GPT-4o writes an introduction about diffusion models, with its own reference list. Then a model with a retriever writes the same introduction.</p>
+    <div class="grid2 gap-cases" data-reveal>
+      <article class="gap-case">
+        <p class="gap-k"><span class="gap-no">1</span>GPT-4o's own reference list</p>
+        <h4>A real paper gets an invented title</h4>
+        <div class="code">
+          <div class="code-head"><span>BibTeX entry</span><span class="tag">One case</span></div>
+          <pre>@article{saharia2022imagen,
+  title={<mark class="err">Imagen: Text-to-image diffusion models with large pre-trained language models</mark>},
+  …
+  journal={arXiv preprint arXiv:2205.11487},
+  year={2022}
+}</pre>
+        </div>
+        <p class="gap-fix"><span class="tag rra">Real title</span><span>“Photorealistic Text-to-Image Diffusion Models with Deep Language Understanding”</span></p>
+      </article>
+      <article class="gap-case">
+        <p class="gap-k"><span class="gap-no">2</span>Qwen-2.5-72B with retrieval</p>
+        <h4>The Transformer paper, cited for noise scheduling</h4>
+        <div class="code">
+          <div class="code-head"><span>Generated introduction</span><span class="tag">One case</span></div>
+          <pre>\section{Introduction}
+&nbsp;
+…architecture of models~\cite{<wbr>goodfellow2014generative, kingma2013auto}, training methods~\cite{<wbr>he2016deep}, and <mark class="err">strategies for scheduling noise~\cite{<wbr>vaswani2017attention}</mark>.</pre>
+        </div>
+        <p class="gap-fix"><span class="tag red">Cited</span><span>“Attention Is All You Need” (Vaswani et al., 2017), a famous work on an unrelated method</span></p>
+      </article>
+    </div>
+    <p class="caveat" data-reveal>These are single cases from ScholarCopilot, Appendix A.3. We did not measure how often this happens. Looking things up once, before writing, is not enough.</p>
+
+    <h3 class="sub" data-reveal>The idea: one model writes and looks things up</h3>
+    <p class="sub-lede" data-reveal>When a citation is due, the model writes a <b>special marker</b>. Its internal state at that marker is the search query, and the search returns a real paper. Writing continues with that paper in context.</p>
+    <figure class="fig" data-reveal>
+      <div class="fig-frame pad">
+        <picture>
+          <source media="(max-width: 640px)" srcset="assets/img/fig/ground-rag-vs-one-model-stacked.webp" width="1000" height="1198">
+          <img src="assets/img/fig/ground-rag-vs-one-model.webp" width="1800" height="586" loading="lazy" decoding="async" alt="Two block diagrams. Traditional RAG: a separate retriever turns a query into a reference, then a generator writes text from the reference and the query. ScholarCopilot: one generator reads context, retrieval markers and references; each marker gives an embedding that fetches a reference, and the same generator writes the text." data-zoom="assets/img/fig/ground-rag-vs-one-model.webp" data-title="Traditional RAG and ScholarCopilot">
+        </picture>
+        <button class="zoom-btn" type="button" data-zoom="assets/img/fig/ground-rag-vs-one-model.webp" data-title="Traditional RAG and ScholarCopilot">Zoom</button>
+      </div>
+      <figcaption><b>Two models, or one.</b> Traditional RAG: a retriever looks things up once, before any sentence exists, and a second model writes. ScholarCopilot: one 7B model, trained jointly to write and retrieve on 500K arXiv papers; the marker is printed [RET]. ScholarCopilot, Figure 1.</figcaption>
+    </figure>
+
+    <h3 class="sub" data-reveal>Is the first suggestion the paper the authors cited?</h3>
+    <p class="sub-lede" data-reveal>Every suggestion comes from a real corpus, so it exists by construction. What we measure is whether it is the right one. We hide a citation and everything after it. A hit means the first suggestion is the paper the authors cited.</p>
+    <div class="chart-card" data-reveal>
+      <div class="chart-head">
+        <div>
+          <h4>Its first suggestion is the cited paper 40% of the time</h4>
+          <p class="cap">Recall@1 on 1,000 held-out papers, against one dense and one keyword-based retriever. ScholarCopilot, Figure 5.</p>
+        </div>
+        <span class="tag-note">Baselines: off the shelf · last-sentence query</span>
+      </div>
+      <div class="chart" data-chart="bars" aria-label="Bar chart of Recall@1: ScholarCopilot 40.1 percent, E5-Mistral-7B-Instruct 15.0 percent, BM25 9.8 percent.">
+        <script type="application/json">
+        {
+          "unit": "%",
+          "domain": [0, 50],
+          "decimals": 1,
+          "axis": "Recall@1 (%)",
+          "kinds": { "base": "Off-the-shelf retriever, last-sentence query", "ours": "ScholarCopilot" },
+          "rows": [
+            { "label": "ScholarCopilot", "value": 40.1, "kind": "ours" },
+            { "label": "E5-Mistral-7B-Instruct", "value": 15.0, "kind": "base", "note": "Dense retriever, off the shelf, last-sentence query" },
+            { "label": "BM25", "value": 9.8, "kind": "base", "note": "Keyword-based, off the shelf, last-sentence query" }
+          ]
+        }
+        </script>
+        <noscript><p class="cap">Recall@1: ScholarCopilot 40.1%, E5-Mistral-7B-Instruct 15.0%, BM25 9.8%.</p></noscript>
+      </div>
+      <p class="cap ground-callback">Back to case 2: in the same clause, ScholarCopilot cites a paper on noise scheduling.</p>
+    </div>
+    <div class="stats k-stats" data-reveal>
+      <div class="stat">
+        <div class="n"><span class="from">15.0% →</span>40.1%</div>
+        <div class="l">of first suggestions match the authors' own citation (Recall@1); the better of two off-the-shelf retrievers reaches 15.0%</div>
+        <span class="tag-note">1,000 held-out papers</span>
+      </div>
+      <div class="stat">
+        <div class="n">10<small>of 10</small></div>
+        <div class="l">students rated its citations above ChatGPT's</div>
+        <span class="tag-note">N = 10 · questionnaire</span>
+      </div>
+      <div class="stat">
+        <div class="n">5<small>of 10</small></div>
+        <div class="l">rated its writing quality higher; most of the rest saw no difference</div>
+        <span class="tag-note">N = 10 · questionnaire</span>
+      </div>
+    </div>
+    <p class="caveat" data-reveal>The two baselines are off the shelf: they were not trained on our data and they query with the last sentence before the citation, so part of the gap is in-domain training. The second and third numbers come from a small user study: ten students drafted introductions and related work with it.</p>
+
+    <div class="takeaway" data-reveal>
+      <span class="takeaway-k">Take-away</span>
+      <p>Writing can now point at <b>real, retrieved sources</b>. Carried forward: <b>source evidence</b>.</p>
+    </div>
+
+    <h3 class="sub" data-reveal>Still open: whether the cited paper supports the sentence</h3>
+    <p class="sub-lede" data-reveal>The scope is introductions and related work in computer science. One thing is not checked yet: that the cited paper supports the sentence. That check belongs to the proposed work.</p>
+  </div>
+</section>

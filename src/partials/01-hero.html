@@ -1,0 +1,65 @@
+<!-- Hero (#top), styled by assets/css/hero.css (every rule is scoped under #top).
+     Left: eyebrow, the proposal title as a four-line h1 (one <span class="ln"> per line; class "hl" = green),
+     author, affiliation, lede (60 words at most), scroll cue.
+     The three title words in green are the three conditions that the talk's title names.
+     Right: the five-node schematic. The drawing is the inline SVG; the labels are the HTML list after it, so they
+     keep their size when the drawing scales. Label positions (--x, --y) are the node centres in percent of the
+     640 x 520 drawing; change them only together with the circles in the SVG. -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <p class="eyebrow hero-eyebrow">PhD Comprehensive II · Research proposal · 26 Nov 2026</p>
+      <h1 class="hero-title">
+        <span class="ln">Towards <span class="hl">Grounded</span>,</span>
+        <span class="ln"><span class="hl">Reproducible</span>,</span>
+        <span class="ln">and <span class="hl">Auditable</span></span>
+        <span class="ln">Autonomous Research</span>
+      </h1>
+      <p class="hero-author">Yubo Wang</p>
+      <p class="hero-affil">David R. Cheriton School of Computer Science, University of Waterloo</p>
+      <p class="hero-lede"><b>What would it take to trust research done by AI?</b> This talk is my research proposal. It asks the question in a narrow sense: <b>can another researcher check the work?</b> Five questions lead there, from <b>a capable model</b> to <b>output we can check</b>.</p>
+      <a class="cue hero-cue" href="#thread"><span>The thread</span><span class="cue-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span></a>
+    </div>
+
+    <figure class="hero-vis">
+      <div class="hv-stage">
+        <svg viewBox="0 0 640 520" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="hv-g-in" gradientUnits="userSpaceOnUse" x1="40" y1="440" x2="122.2" y2="408.7"><stop class="hv-s0" offset="0"/><stop class="hv-s1" offset="1"/></linearGradient>
+            <linearGradient id="hv-g-out" gradientUnits="userSpaceOnUse" x1="543.6" y1="111.7" x2="610" y2="40"><stop class="hv-t1" offset="0"/><stop class="hv-t0" offset="1"/></linearGradient>
+          </defs>
+          <g class="hv-frame">
+            <path class="hv-base" d="M96 470H592"/>
+            <path class="hv-hang" style="--i:1" d="M128.2 416.7V470"/>
+            <path class="hv-hang" style="--i:2" d="M237.6 362.2V470"/>
+            <path class="hv-hang" style="--i:3" d="M342.5 296V470"/>
+            <path class="hv-hang" style="--i:4" d="M442.8 218.2V470"/>
+            <path class="hv-hang" style="--i:5" d="M538.6 130.7V470"/>
+            <path class="hv-brk" d="M128.2 481v7h109.4v-7"/>
+            <path class="hv-brk" d="M342.5 481v7h196.1v-7"/>
+          </g>
+          <path class="hv-thread" pathLength="1" stroke="url(#hv-g-in)" d="M40 440Q257.6 365.2 442.8 207.2"/>
+          <path class="hv-flow" d="M40 440Q257.6 365.2 442.8 207.2"/>
+          <path class="hv-tail" stroke="url(#hv-g-out)" d="M442.8 207.2Q530 132.8 610 40"/>
+          <circle class="hv-node" style="--i:1" cx="128.2" cy="405.7" r="7"/>
+          <circle class="hv-node" style="--i:2" cx="237.6" cy="351.2" r="7"/>
+          <circle class="hv-node" style="--i:3" cx="342.5" cy="285" r="7"/>
+          <circle class="hv-node" style="--i:4" cx="442.8" cy="207.2" r="7"/>
+          <circle class="hv-halo" cx="538.6" cy="117.7" r="15"/>
+          <circle class="hv-node is-wip" style="--i:5" cx="538.6" cy="117.7" r="8.5"/>
+          <circle class="hv-core" style="--i:5" cx="538.6" cy="117.7" r="3"/>
+        </svg>
+        <ol class="hv-labels" aria-label="The five questions of the talk">
+          <li style="--x:20.04%;--y:78.01%;--i:1"><a href="#measure"><b><i>01</i> Measure</b><span>MMLU-Pro</span></a></li>
+          <li style="--x:37.13%;--y:67.53%;--i:2"><a href="#improve"><b><i>02</i> Improve</b><span>Critique Fine-Tuning</span></a></li>
+          <li style="--x:53.52%;--y:54.81%;--i:3"><a href="#ground"><b><i>03</i> Ground</b><span>ScholarCopilot</span></a></li>
+          <li style="--x:69.19%;--y:39.84%;--i:4"><a href="#reproduce"><b><i>04</i> Reproduce</b><span>ReproBridge</span></a></li>
+          <li class="is-wip" style="--x:84.16%;--y:22.63%;--i:5"><a href="#audit"><b><i>05</i> Audit</b><span>in progress</span></a></li>
+        </ol>
+        <p class="hv-layer" style="--x:28.58%">A capable model</p>
+        <p class="hv-layer" style="--x:68.84%">Output we can check</p>
+      </div>
+      <figcaption class="hero-caption"><span class="tag-note">Schematic</span><span>Five questions on one thread</span></figcaption>
+    </figure>
+  </div>
+</header>

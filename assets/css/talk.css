@@ -1,0 +1,292 @@
+/* talk.css: components that this site adds to the ReproBridge design system (base.css + kit.css) and that more
+ * than one section uses. Everything is built from base.css tokens, so it follows the light and dark themes.
+ *   1  small shared pieces   .cue  .tag.wip  .ext  .draft overlay
+ *   2  chapter template      .ch-label  .papers / .paper  .fig-frame.pad  .qcard  .takeaway  chart marks (plots.js)
+ *   3  the five-node rail    .rail5            (used by the bridges; the roadmap in thread.css draws its nodes the same way)
+ *   4  the bridge band       .bridge           (the transition between two chapters) */
+
+/* ================================================================== 1  small shared pieces */
+
+/* mono "go on" link with a circled arrow (hero, bridges) */
+.cue {
+  display: inline-flex; align-items: center; gap: 12px; text-decoration: none;
+  font-family: var(--mono); font-feature-settings: "calt" 0; font-size: 11.5px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ink-3); transition: color .2s;
+}
+.cue:hover { color: var(--ink); }
+.cue-ic { flex: none; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; transition: border-color .2s, background-color .2s; }
+.cue:hover .cue-ic { border-color: var(--ink-4); }
+.cue-ic svg { width: 14px; height: 14px; }
+@media (prefers-reduced-motion: no-preference) { .cue-ic svg { animation: c2-nudge 2.4s var(--ease) infinite; } }
+@keyframes c2-nudge { 0%, 70%, 100% { transform: none; } 82% { transform: translateY(3px); } }
+
+/* status tag with a live dot: <span class="tag gold wip">In progress</span> */
+.tag.wip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 22%, transparent); margin-right: 3px; }
+@media (prefers-reduced-motion: no-preference) { .tag.wip::before { animation: c2-blink 2.6s ease-in-out infinite; } }
+@keyframes c2-blink { 0%, 100% { box-shadow: 0 0 0 2px color-mix(in srgb, var(--gold) 26%, transparent); } 50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--gold) 8%, transparent); } }
+
+/* outbound link: an up-right arrow after the label (drawn with a mask, so it takes the text colour) */
+.ext::after {
+  content: ""; flex: none; display: inline-block; width: .82em; height: .82em; margin-left: .4em; vertical-align: -.06em; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17L17 7M9 7h8v8'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17L17 7M9 7h8v8'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.btn.ext { gap: 0; }
+
+/* keep a hyphenated compound on one line: <span class="nowrap">Multi-Task</span> */
+.nowrap { white-space: nowrap; }
+
+/* draft overlay: open the page with ?drafts=1 to outline every block that still holds placeholder content */
+.show-drafts [data-draft] { outline: 1.5px dashed var(--gold); outline-offset: 6px; }
+.draft-badge {
+  position: absolute; z-index: 40; padding: 2px 8px; border-radius: 999px; white-space: nowrap; pointer-events: none;
+  background: var(--gold-tint); color: var(--gold-ink); font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: .08em; line-height: 1.5; text-transform: uppercase;
+}
+
+/* ================================================================== 2  chapter template
+ * section.sec.chapter > .wrap > .sec-head ( p.ch-label + h2 + p.lede ), .papers, h3.sub blocks, .takeaway   */
+.sec-head .ch-label { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 0 0 18px; }
+.sec-head .ch-label .sec-no { display: inline; margin: 0; }
+.ch-q { display: inline-flex; align-items: center; gap: 16px; font-size: 15px; line-height: 1.4; color: var(--ink-3); }
+.ch-q::before { content: ""; flex: none; width: 18px; height: 1px; background: var(--line-2); }
+@media (max-width: 760px) { .sec-head .ch-label { gap: 8px 12px; } .ch-q { flex-basis: 100%; } .ch-q::before { display: none; } }
+
+/* paper card: who wrote it, where it appeared, where to read it */
+.papers { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+.papers.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.paper { position: relative; display: flex; flex-direction: column; min-width: 0; padding: 24px 26px 22px; border-radius: var(--rad-lg); background: var(--bg); border: 1px solid var(--line); }
+.paper-top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; margin-bottom: 16px; }
+.paper-top .k-ic { width: 36px; height: 36px; margin: 0; border-radius: 11px; }
+.paper-top .k-ic svg { width: 19px; height: 19px; }
+.paper-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-left: auto; }
+.paper h3 { margin: 0 0 10px; font-size: clamp(19px, 1.7vw, 22px); font-weight: 580; letter-spacing: -.018em; line-height: 1.26; text-wrap: balance; }
+.paper-authors { max-width: 940px; margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--ink-2); text-wrap: pretty; }
+.paper-authors b { color: var(--ink); font-weight: 650; }
+.paper-note { margin: 6px 0 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-3); }
+.paper-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 20px; }
+@media (max-width: 860px) { .papers.two { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) { .paper { padding: 20px 20px 18px; } .paper-tags { margin-left: 0; width: 100%; } }
+
+/* paper figures: a padded white mat, the image opens the lightbox */
+.fig-frame.pad { padding: 22px 26px; }
+/* dark theme: the mat takes the colour that a dimmed white figure ends up with, so the two join without a seam */
+:root[data-theme="dark"] .fig-frame.pad { padding: 22px 26px; background: #EAEAEA; }
+:root[data-theme="dark"] .fig-frame.pad img { border-radius: 0; }
+.fig-frame img[data-zoom] { cursor: zoom-in; }
+@media (max-width: 760px) { .fig-frame.pad, :root[data-theme="dark"] .fig-frame.pad { padding: 14px; } }
+
+/* a wide paper figure with a second cut for phones: <picture><source media="(max-width: 640px)" …><img …></picture> */
+.fig-frame picture { display: block; }
+
+/* question card: one exam question with its options; .is-model = the answer a model gave, .is-key = the answer key.
+ * figure.fig.qcard > p.qcard-k + p.qcard-q + ol.qcard-opts > li ( b letter + value [+ span.qcard-tag] ) */
+.qcard { max-width: 760px; margin: 0; }
+.qcard-body { padding: 22px 24px 24px; border-radius: var(--rad-lg); background: var(--bg); border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
+.qcard-k { margin: 0; font-family: var(--mono); font-feature-settings: "calt" 0; font-size: 11.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+.qcard-q { margin: 8px 0 18px; font-size: clamp(17px, 1.5vw, 19.5px); font-weight: 560; letter-spacing: -.012em; line-height: 1.35; color: var(--ink); }
+.qcard-opts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.qcard-opts li {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-width: 0; min-height: 58px; padding: 8px 6px;
+  border-radius: 10px; border: 1.5px solid var(--line); background: var(--bg-soft);
+  font-size: 15.5px; line-height: 1.25; text-align: center; white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--ink-2);
+}
+.qcard-opts li b { margin-right: .1em; font-weight: 650; color: var(--ink); }
+.qcard-opts .is-model { background: var(--red-tint); border-color: var(--red); color: var(--red-ink); font-weight: 650; }
+.qcard-opts .is-key { background: var(--violet-tint); border-color: var(--violet); color: var(--violet-ink); font-weight: 650; }
+.qcard-opts .is-model b, .qcard-opts .is-key b { color: inherit; }
+.qcard-tag { font-family: var(--mono); font-feature-settings: "calt" 0; font-size: 9.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; }
+@media (max-width: 640px) {
+  .qcard-body { padding: 18px 16px 18px; }
+  .qcard-opts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .qcard-opts li { min-height: 46px; }
+}
+
+/* stats row inside a chapter sits right under its sub-lede; cells may shrink and long basis tags may wrap */
+.chapter .stats.k-stats { margin-top: 0; }
+.stats .stat { min-width: 0; }
+.stats .tag-note { max-width: 100%; white-space: normal; line-height: 1.35; text-align: left; border-radius: 12px; }
+/* two columns on phones: the last row needs no hairline of its own, the row's bottom rule closes it */
+@media (max-width: 760px) { .stats .stat:last-child, .stats .stat:nth-last-child(2):nth-child(odd) { border-bottom: 0; } }
+.chapter .chart-card { margin-top: 40px; }
+.chapter .caveat + .chart-card { margin-top: 36px; }
+.chapter .chart-card + .stats.k-stats { margin-top: 28px; }      /* a stats row never touches the card above it */
+
+/* take-away: the one sentence the chapter settles */
+.takeaway {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 10px 30px; margin-top: 72px; padding: 26px 30px;
+  border-radius: var(--rad-lg); background: color-mix(in srgb, var(--rra-tint) 55%, var(--bg)); border: 1px solid color-mix(in srgb, var(--rra) 28%, var(--line));
+}
+.takeaway-k {
+  display: inline-flex; align-items: center; gap: 10px; white-space: nowrap;
+  font-family: var(--mono); font-feature-settings: "calt" 0; font-size: 11.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--rra-ink);
+}
+.takeaway-k::before {
+  content: ""; flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--accent-fill)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 12.5l3.6 3.6 7.4-7.8'/%3E%3C/svg%3E") center / 14px no-repeat;
+}
+.takeaway p { margin: 0; font-size: clamp(19px, 1.9vw, 24px); font-weight: 500; letter-spacing: -.012em; line-height: 1.38; color: var(--ink); text-wrap: pretty; }
+.takeaway p b { font-weight: 640; }
+@media (max-width: 760px) { .takeaway { grid-template-columns: minmax(0, 1fr); margin-top: 56px; padding: 22px; } }
+/* the same block for planned work: gold and dashed, a hollow dot instead of the tick (nothing is settled yet) */
+.takeaway.is-wip { background: color-mix(in srgb, var(--gold-tint) 55%, var(--bg)); border: 1.5px dashed color-mix(in srgb, var(--gold) 60%, var(--line)); }
+.takeaway.is-wip .takeaway-k { color: var(--gold-ink); }
+.takeaway.is-wip .takeaway-k::before { box-sizing: border-box; width: 18px; height: 18px; margin: 0 2px; background: none; border: 2px dashed var(--gold); }
+
+/* source line inside a quoted key sentence (.insight) */
+.insight-src { display: block; margin-top: 10px; font-family: var(--mono); font-size: 11px; font-style: normal; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+
+/* chart marks drawn by assets/js/plots.js (base.css has the chrome: .tick, .grid, .axis-line, .lbl, .val, .mk-*) */
+.chart[data-chart] { min-height: 80px; }
+.chart .val { paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; font-variant-numeric: tabular-nums; }
+.chart .val.neutral { fill: var(--ink-2); }
+.chart .val.flag { fill: var(--red-ink); }
+.chart .val.gold { fill: var(--gold-ink); }
+.chart .bar.base { fill: var(--raw-tint); stroke: var(--raw); stroke-width: 1.5; }
+.chart .bar.ours { fill: var(--rra); }
+.chart .bar.neutral { fill: var(--line-2); }
+.chart .bar.flag { fill: var(--red); }
+.chart .bar.gold { fill: var(--gold); }
+.chart .gain-bg { fill: var(--rra-tint); }
+.chart .gain { font-family: var(--mono); font-size: 12px; font-weight: 600; fill: var(--rra-ink); font-variant-numeric: tabular-nums; }
+.chart .gain-bg.neg { fill: var(--red-tint); }
+.chart .gain.neg { fill: var(--red-ink); }
+.chart .row-hit { fill: transparent; }
+.chart .row-hit:focus { outline: none; }
+.chart .row-hit:hover + .row-bg, .chart .row-hit:focus-visible + .row-bg { opacity: 1; }
+.chart .row-bg { fill: var(--panel); opacity: 0; pointer-events: none; transition: opacity .2s; }
+.chart .row-hit:focus-visible + .row-bg { stroke: var(--rra); stroke-width: 2; }
+/* legend swatches for the bar kinds that base.css does not name */
+.sw.neutral { background: var(--line-2); }
+.sw.flag { background: var(--red); border-radius: 3px; }
+.chart-legend { margin: 0 0 6px; }
+.chart-table { margin-top: 14px; }
+.chart-table summary {
+  display: inline-flex; align-items: center; gap: 8px; cursor: pointer; list-style: none; padding: 4px 0;
+  font-family: var(--mono); font-size: 11.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
+}
+.chart-table summary::-webkit-details-marker { display: none; }
+.chart-table summary::before { content: ""; width: 6px; height: 6px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(45deg); transition: transform .2s; }
+.chart-table[open] summary::before { transform: rotate(135deg); }
+.chart-table summary:hover { color: var(--ink); }
+.chart-table .tbl-scroll { margin-top: 10px; }
+.chart-table .tbl tbody th { font-weight: 500; }
+.chart-table .tbl thead th.n { font-family: var(--sans); font-size: 13px; }
+.chart-card > .caveat { margin-top: 12px; }
+/* entrance: bars grow, the "after" mark slides out from the "before" mark (plots.js adds .in once, when visible) */
+@media (prefers-reduced-motion: no-preference) {
+  html.js .chart .bar { transform-box: fill-box; transform-origin: left center; transition: transform .8s var(--ease-out); transition-delay: calc(var(--i, 0) * 70ms); }
+  html.js .chart:not(.in) .bar { transform: scaleX(0); }
+  html.js .chart .dumb-to { transition: transform .9s var(--ease-out); transition-delay: calc(var(--i, 0) * 70ms); }
+  html.js .chart:not(.in) .dumb-to { transform: translateX(var(--dx, 0px)); }
+  html.js .chart .conn { transition: opacity .5s var(--ease) calc(.25s + var(--i, 0) * 70ms); }
+  html.js .chart .gain-g, html.js .chart .bar-val { transition: opacity .5s var(--ease) calc(.45s + var(--i, 0) * 70ms); }
+  html.js .chart:not(.in) .conn, html.js .chart:not(.in) .gain-g, html.js .chart:not(.in) .bar-val { opacity: 0; }
+}
+
+/* ================================================================== 3  the five-node rail
+ * ol.rail5 > li[.is-done | .is-done.is-from | .is-next] > i + span(b index + verb).
+ *   .is-done   a chapter already covered: filled node, solid line to the next node
+ *   .is-from   the chapter just covered: the stretch to the next node is the gold arch (the gap being bridged)
+ *   .is-next   the question that comes next: ringed node with a halo
+ *   (none)     still ahead: hollow node, dashed line
+ * --ring must be the colour of the surface the rail sits on. */
+.rail5 { --ring: var(--bg); list-style: none; margin: 0; padding: 34px 0 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.rail5 li { position: relative; min-width: 0; padding: 28px 8px 0 0; }
+.rail5 li::after { content: ""; position: absolute; left: 8px; top: 7px; width: 100%; height: 0; border-top: 2px dashed var(--line-2); }
+.rail5 li:last-child::after { display: none; }
+.rail5 li.is-done::after { border-top: 2px solid var(--rra); }
+.rail5 li.is-from::after {
+  top: -21px; height: 30px; box-sizing: border-box; border: 1.5px solid var(--bridge-stroke); border-bottom-width: 2px; border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--bridge-stroke) 70%, transparent) 0 1px, transparent 1px 10%);
+}
+.rail5 i {
+  position: absolute; left: 2px; top: 2px; z-index: 1; width: 12px; height: 12px; box-sizing: border-box; border-radius: 50%;
+  background: var(--ring); border: 1.5px solid var(--ink-4); box-shadow: 0 0 0 3px var(--ring);
+}
+.rail5 .is-done i { background: var(--rra); border-color: var(--rra); }
+.rail5 .is-next i {
+  left: 0; top: 0; width: 16px; height: 16px; border: 2.5px solid var(--rra); background: var(--bg);
+  box-shadow: 0 0 0 3px var(--ring), 0 0 0 8px color-mix(in srgb, var(--rra) 20%, transparent);
+}
+.rail5 .is-next i::after { content: ""; position: absolute; inset: 2.5px; border-radius: 50%; background: var(--rra); }
+.rail5 span {
+  display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-family: var(--mono); font-feature-settings: "calt" 0; font-size: 11px; font-weight: 500; line-height: 1.5; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3);
+}
+.rail5 span b { font-weight: 600; }
+.rail5 .is-done span { color: var(--ink-2); }
+.rail5 .is-done span b { color: var(--rra-ink); }
+.rail5 .is-next span { color: var(--ink); font-weight: 700; }
+.rail5 .is-next span b { color: var(--rra-ink); font-weight: 700; }
+@media (prefers-reduced-motion: no-preference) {
+  html.js .rail5 li.is-done:not(.is-from)::after { transform-origin: left center; transition: transform .7s var(--ease-out); transition-delay: calc(var(--i, 0) * 140ms + .1s); }
+  html.js .rail5:not(.in) li.is-done:not(.is-from)::after { transform: scaleX(0); }
+  html.js .rail5 li.is-from::after { clip-path: inset(-4px 0 -4px 0); transition: clip-path 1.1s var(--ease-out) calc(var(--i, 0) * 140ms + .25s); }
+  html.js .rail5:not(.in) li.is-from::after { clip-path: inset(-4px 100% -4px 0); }
+  html.js .rail5.in .is-next i { animation: c2-beacon 2.8s ease-in-out 1.4s infinite; }
+}
+@keyframes c2-beacon {
+  0%, 100% { box-shadow: 0 0 0 3px var(--ring), 0 0 0 8px color-mix(in srgb, var(--rra) 20%, transparent); }
+  50% { box-shadow: 0 0 0 3px var(--ring), 0 0 0 12px color-mix(in srgb, var(--rra) 9%, transparent); }
+}
+@media (max-width: 560px) {
+  .rail5 span { font-size: 9.5px; letter-spacing: .04em; }
+  .rail5 span b { display: none; }
+}
+@media (max-width: 380px) {
+  .rail5 li { padding-right: 2px; }
+  .rail5 span { font-size: 8.5px; letter-spacing: .02em; }
+}
+
+/* ================================================================== 4  the bridge band
+ * aside.bridge > .wrap > .br-head ( p.br-eyebrow + p.br-route ), ol.rail5, dl.br-lines ( .br-line.is-have /
+ * .is-open / .is-next > dt + dd ), a.cue.br-cue.   One per pair of consecutive chapters.
+ * The eyebrow is the question of the whole talk, the same on every bridge. */
+.bridge {
+  position: relative; overflow: hidden; padding: 84px 0 88px;
+  background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.bridge::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(var(--dot) 1px, transparent 1.3px); background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(100deg, transparent 52%, #000 100%); mask-image: linear-gradient(100deg, transparent 52%, #000 100%);
+}
+.bridge .wrap { position: relative; }
+.bridge .rail5 { --ring: var(--bg-soft); }
+.br-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; margin-bottom: 30px; }
+.br-eyebrow {
+  display: inline-flex; align-items: center; gap: 12px; min-width: 0; margin: 0;
+  font-family: var(--mono); font-feature-settings: "calt" 0; font-size: 12px; font-weight: 600; line-height: 1.6; letter-spacing: .12em; text-transform: uppercase; color: var(--bridge-ink); text-wrap: balance;
+}
+.br-eyebrow svg { flex: none; width: 38px; height: 17px; fill: none; stroke: var(--bridge-stroke); stroke-width: 1.5; stroke-linecap: round; }
+.br-eyebrow svg .thin { stroke-width: 1; opacity: .8; }
+.br-route { margin: 0; font-family: var(--mono); font-feature-settings: "calt" 0; font-size: 11.5px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+.br-route b { font-weight: 600; color: var(--ink); }
+.br-lines { margin: 44px 0 0; border-top: 1px solid var(--line); }
+.br-line { display: grid; grid-template-columns: 196px minmax(0, 1fr); align-items: baseline; gap: 6px 28px; padding: 19px 0; border-bottom: 1px solid var(--line); }
+.br-line dt {
+  display: flex; align-items: center; gap: 11px;
+  font-family: var(--mono); font-feature-settings: "calt" 0; font-size: 11.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3);
+}
+.br-line dt::before { content: ""; flex: none; width: 10px; height: 10px; box-sizing: border-box; border-radius: 50%; }
+.br-line.is-have dt { color: var(--rra-ink); }
+.br-line.is-have dt::before { background: var(--rra); }
+.br-line.is-open dt { color: var(--bridge-ink); }
+.br-line.is-open dt::before { border: 1.5px dashed var(--gold); }
+.br-line.is-next dt { color: var(--ink); }
+.br-line.is-next dt::before { border: 2px solid var(--rra); background: radial-gradient(var(--rra) 0 2px, transparent 2.6px); }
+.br-line dd { max-width: 780px; margin: 0; font-size: clamp(17.5px, 1.5vw, 20px); line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+.br-line dd b { color: var(--ink); font-weight: 620; }
+.br-line.is-next { align-items: start; padding: 30px 0 0; border-bottom: 0; }
+.br-line.is-next dt { padding-top: calc(clamp(30px, 3.75vw, 50px) * .54 - 9.5px); }
+.br-line.is-next dd { max-width: 900px; font-size: clamp(30px, 3.75vw, 50px); font-weight: 540; letter-spacing: -.032em; line-height: 1.08; color: var(--ink); text-wrap: balance; }
+.br-line.is-next dd em { font-style: normal; color: var(--rra); }
+.br-cue { margin: 34px 0 0 224px; }
+@media (max-width: 860px) {
+  .bridge { padding: 64px 0 68px; }
+  .br-line { grid-template-columns: minmax(0, 1fr); padding: 16px 0 18px; }
+  .br-line.is-next dt { padding-top: 0; }
+  .br-line.is-next { padding-top: 22px; gap: 12px; }
+  .br-cue { margin-left: 0; }
+  .br-lines { margin-top: 36px; }
+}

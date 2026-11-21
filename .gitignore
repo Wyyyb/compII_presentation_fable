@@ -1,0 +1,6 @@
+# verification screenshots: never publish
+_qa/
+# build leftovers and previews
+.preview-*.html
+.build-*.tmp
+__pycache__/

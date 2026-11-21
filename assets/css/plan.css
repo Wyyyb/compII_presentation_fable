@@ -1,0 +1,74 @@
+/* Plan (#plan): the timeline rail and the contribution cards.
+ * ol.tl > li.tl-stop[.is-now | .is-end] > span.tl-when + i.tl-node + div.tl-what(b + span).
+ * Wide: one horizontal rail, date above each node, name and one grey line below. Narrow: a vertical list. */
+#plan .tl { list-style: none; margin: 0; padding: 40px 0 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+#plan .tl-stop { position: relative; min-width: 0; padding-right: 16px; }
+#plan .tl-when {
+  display: block; height: 20px; margin-bottom: 12px; white-space: nowrap;
+  font-family: var(--mono); font-feature-settings: "calt" 0; font-size: 11.5px; font-weight: 600; line-height: 20px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3);
+}
+#plan .is-now .tl-when { color: var(--rra-ink); }
+#plan .tl-today { position: absolute; left: 0; top: -36px; }
+#plan .tl-today::after { content: ""; position: absolute; left: 7px; top: 100%; height: 6px; border-left: 1.5px solid var(--rra); }
+/* the rail: what is still ahead is dashed; a short solid lead-in marks the work already done */
+#plan .tl-stop::before { content: ""; position: absolute; left: 8px; top: 39px; width: 100%; border-top: 2px dashed var(--line-2); }
+#plan .tl-stop.is-end::before { display: none; }
+#plan .tl-stop.is-now::after { content: ""; position: absolute; right: calc(100% - 8px); top: 39px; width: 64px; height: 2px; background: linear-gradient(90deg, transparent, var(--rra)); }
+#plan .tl-node {
+  position: relative; z-index: 1; display: block; width: 12px; height: 12px; margin: 2px 2px 18px; box-sizing: border-box; border-radius: 50%;
+  background: var(--bg); border: 1.5px solid var(--ink-4); box-shadow: 0 0 0 4px var(--bg);
+}
+#plan .is-now .tl-node { width: 16px; height: 16px; margin: 0 0 16px; border: 0; background: var(--rra); box-shadow: 0 0 0 3px var(--bg), 0 0 0 7px color-mix(in srgb, var(--rra) 22%, transparent); }
+#plan .is-end .tl-node { width: 16px; height: 16px; margin: 0 0 16px; border: 2px solid var(--ink); background: radial-gradient(var(--ink) 0 2.6px, var(--bg) 3.2px); }
+#plan .tl-what b { display: block; font-size: 16px; font-weight: 600; letter-spacing: -.01em; line-height: 1.3; color: var(--ink); }
+#plan .tl-what span { display: block; margin-top: 5px; font-size: 13.5px; line-height: 1.45; color: var(--ink-3); text-wrap: pretty; }
+
+#plan .contrib .kicker { margin-bottom: 8px; }
+#plan .contrib h4 { font-size: 19px; font-weight: 580; letter-spacing: -.014em; line-height: 1.28; margin-bottom: 8px; text-wrap: balance; }
+
+
+/* minimum completed study: a dashed box under the rail */
+#plan .min-study { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 22px; margin-top: 44px; padding: 16px 22px; border: 1.5px dashed var(--line-2); border-radius: var(--rad); }
+#plan .min-study .kicker { color: var(--ink); font-weight: 600; }
+#plan .min-study ol { display: flex; flex-wrap: wrap; gap: 6px 26px; margin: 0; padding: 0; list-style: none; counter-reset: ms; }
+#plan .min-study li { counter-increment: ms; font-size: 15.5px; color: var(--ink-2); }
+#plan .min-study li::before { content: counter(ms) "  "; font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--rra-ink); white-space: pre; }
+#plan .min-study b { color: var(--ink); font-weight: 620; }
+
+/* three risks with responses */
+#plan .risks { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+#plan .risks li { display: grid; grid-template-columns: 90px minmax(0, 1fr) minmax(0, 1.3fr); align-items: baseline; gap: 4px 20px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+#plan .risk-k { font-family: var(--mono); font-feature-settings: "calt" 0; font-size: 11.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+#plan .risks b { font-size: 18px; font-weight: 600; letter-spacing: -.012em; color: var(--ink); }
+#plan .risks li > span:last-child { font-size: 15.5px; color: var(--ink-2); }
+#plan .risks li > span:last-child::before { content: "→ "; color: var(--ink-4); }
+
+/* closing: the question of the talk and its narrow answer */
+#plan .closing { margin-top: 64px; padding: 34px 36px; border-radius: var(--rad-lg); background: var(--block); color: var(--on-block); }
+#plan .closing-q { margin: 0 0 12px; font-family: var(--mono); font-feature-settings: "calt" 0; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: color-mix(in srgb, var(--on-block) 66%, transparent); }
+#plan .closing-a { margin: 0; max-width: 860px; font-size: clamp(19px, 1.9vw, 24px); line-height: 1.42; letter-spacing: -.012em; text-wrap: pretty; }
+#plan .closing-a b { font-weight: 640; color: var(--rra-2, var(--on-block)); }
+
+@media (max-width: 1080px) {
+  #plan .tl { grid-template-columns: minmax(0, 1fr); padding-top: 34px; max-width: 580px; }
+  #plan .tl-stop { display: grid; grid-template-columns: 124px 16px minmax(0, 1fr); column-gap: 14px; align-items: start; padding: 0 0 26px; }
+  #plan .tl-stop.is-end { padding-bottom: 0; }
+  #plan .tl-when { height: auto; margin: 0; line-height: 22px; white-space: normal; }
+  #plan .tl-today { top: -30px; }
+  #plan .tl-today::after { display: none; }
+  #plan .tl-node { margin: 5px 2px 0; }
+  #plan .is-now .tl-node, #plan .is-end .tl-node { margin: 3px 0 0; }
+  #plan .tl-stop::before { left: 145px; top: 11px; width: 0; height: 100%; border-top: 0; border-left: 2px dashed var(--line-2); }
+  #plan .tl-stop.is-now::after { display: none; }
+  #plan .tl-what b { line-height: 22px; }
+  #plan .tl-what span { margin-top: 2px; }
+}
+@media (max-width: 760px) {
+  #plan .risks li { grid-template-columns: minmax(0, 1fr); }
+  #plan .closing { padding: 24px 22px; }
+}
+@media (max-width: 480px) {
+  #plan .tl-stop { grid-template-columns: 96px 16px minmax(0, 1fr); column-gap: 12px; }
+  #plan .tl-stop::before { left: 115px; }
+  #plan .tl-when { font-size: 10.5px; letter-spacing: .06em; }
+}

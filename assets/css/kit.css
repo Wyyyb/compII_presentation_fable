@@ -1,0 +1,301 @@
+/* kit.css: component recipes lifted from the ReproBridge page's SECTION stylesheets and renamed with neutral
+ * .k-* class names, so a new site can use them in any section. base.css already holds the shared system (tokens,
+ * layout, eyebrow / sec-head / lede, buttons, chips, tags, cards, stats, figures, tables, code, charts, reveal).
+ * Each block names the rule of the ReproBridge project page it was taken from; values are unchanged unless a
+ * comment says so. Everything is theme-aware because it only uses base.css tokens. */
+
+/* ------------------------------------------------------------------ k-pillars: numbered overview cards
+ * from overview.css  #overview .ov-pillars / .ov-card / .ov-top / .ov-kicker / .ov-title / .ov-visual / .ov-copy /
+ * .ov-foot / .ov-link.   Markup: article.k-pcard > .k-ptop(span.nb + span.kicker) + h3 + .k-pvis + p + p.k-pfoot + a */
+.k-pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
+.k-pcard {
+  position: relative; display: flex; flex-direction: column; padding: 22px 22px 20px;
+  border-radius: var(--rad-lg); background: var(--bg); border: 1px solid var(--line);
+  transition: transform .6s var(--ease-out), border-color .35s var(--ease), box-shadow .45s var(--ease-out);
+}
+.k-pcard:hover, .k-pcard:focus-within { transform: translateY(-3px); border-color: var(--line-2); box-shadow: var(--shadow-md); }
+.k-ptop { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.k-ptop .nb { width: auto; min-width: 26px; height: 22px; padding: 0 6px; border-radius: 999px; font-size: 11.5px; letter-spacing: .02em; }
+.k-pcard h3 { font-size: 24px; font-weight: 560; letter-spacing: -.024em; margin: 0; }
+.k-pvis {
+  position: relative; margin: 16px 0 18px; border-radius: var(--rad); background-color: var(--panel);
+  background-image: radial-gradient(var(--dot) .9px, transparent 1.2px); background-size: 12px 12px; background-position: 6px 6px;
+  aspect-ratio: 260 / 150; overflow: hidden; transition: background-color .45s var(--ease);
+}
+.k-pcard:hover .k-pvis { background-color: color-mix(in srgb, var(--rra-tint) 55%, var(--panel)); }
+.k-pvis svg, .k-pvis img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.k-pcard > p { flex: 1 1 auto; margin: 0 0 16px; font-size: 15.5px; line-height: 1.58; color: var(--ink-2); }
+.k-pcard > .k-pfoot {
+  flex: none; margin: 0 0 14px; padding-top: 14px; border-top: 1px solid var(--line);
+  font-family: var(--mono); font-size: 12.5px; line-height: 1.5; color: var(--ink-3); font-variant-numeric: tabular-nums;
+}
+.k-pfoot b { font-weight: 600; color: var(--ink); }
+.k-plink { align-self: flex-start; font-size: 14.5px; font-weight: 550; color: var(--rra-ink); text-decoration: none; }
+.k-plink::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }   /* the whole card is the target */
+@media (max-width: 1000px) { .k-pillars { grid-template-columns: minmax(0, 580px); justify-content: center; gap: 28px; } }
+
+/* ------------------------------------------------------------------ k-stats: the headline stats row under a block
+ * from overview.css  #overview .ov-stats (a modifier for base.css .stats: tag-notes pinned to the bottom, phone sizes). */
+.k-stats { margin-top: 64px; }
+.k-stats .stat { display: flex; flex-direction: column; align-items: flex-start; }
+.k-stats .l { flex: 1 1 auto; text-wrap: pretty; }
+.k-stats .n small { margin: 0 8px 0 4px; }
+@media (max-width: 760px) {
+  .k-stats { margin-top: 48px; }
+  .k-stats .stat { padding: 22px 14px 20px; }
+  .k-stats .stat:nth-child(2n+1) { padding-left: 0; }
+  .k-stats .n { font-size: 30px; white-space: nowrap; }
+  .k-stats .n .from { margin-right: 4px; }
+  .k-stats .n small { margin: 0 5px 0 3px; }
+}
+@media (max-width: 400px) { .k-stats .n { font-size: 26px; } }
+
+/* ------------------------------------------------------------------ k-pipe: a row of numbered step cards
+ * from benchmark.css  #benchmark .bm-pipe (the audit pipeline).  Markup: ol.k-pipe > li[.is-warn|.is-ok|.is-cond|.is-end]
+ * > span.k-pipe-n + b + span.   --n sets the column count (the source uses 6). */
+.k-pipe { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--n, 5), minmax(0, 1fr)); gap: 24px; }
+.k-pipe li {
+  position: relative; display: flex; flex-direction: column; gap: 4px; min-width: 0;
+  padding: 14px 14px 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg);
+}
+.k-pipe li + li::before {
+  content: ""; position: absolute; left: -17px; top: 50%; width: 9px; height: 9px; margin-top: -4.5px;
+  border-top: 1.5px solid var(--ink-4); border-right: 1.5px solid var(--ink-4); transform: rotate(45deg);
+}
+.k-pipe-n { display: inline-grid; place-items: center; width: 22px; height: 22px; margin-bottom: 6px; border-radius: 50%; background: var(--panel-2); color: var(--ink-2); font-family: var(--mono); font-size: 11px; font-weight: 600; }
+.k-pipe b { font-size: 14.5px; font-weight: 600; line-height: 1.3; color: var(--ink); }
+.k-pipe span:not(.k-pipe-n) { font-size: 13px; line-height: 1.45; color: var(--ink-3); }
+.k-pipe .is-warn { border-color: color-mix(in srgb, var(--red) 40%, var(--line)); background: color-mix(in srgb, var(--red-tint) 45%, var(--bg)); }
+.k-pipe .is-warn .k-pipe-n { background: var(--red); color: var(--on-accent); }
+.k-pipe .is-ok { border-color: color-mix(in srgb, var(--rra) 40%, var(--line)); background: color-mix(in srgb, var(--rra-tint) 50%, var(--bg)); }
+.k-pipe .is-ok .k-pipe-n { background: var(--accent-fill); color: var(--on-accent); }
+.k-pipe .is-cond { border-style: dashed; border-color: var(--line-2); }
+.k-pipe .is-end { background: var(--block); border-color: var(--block); }
+.k-pipe .is-end b { color: var(--on-block); }
+.k-pipe .is-end span:not(.k-pipe-n) { color: color-mix(in srgb, var(--on-block) 72%, transparent); }
+.k-pipe .is-end .k-pipe-n { background: color-mix(in srgb, var(--on-block) 18%, transparent); color: var(--on-block); }
+@media (max-width: 1080px) { .k-pipe { grid-template-columns: repeat(3, minmax(0, 1fr)); } .k-pipe li:nth-child(3n+1)::before { display: none; } }
+@media (max-width: 640px) {
+  .k-pipe { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .k-pipe li + li::before, .k-pipe li:nth-child(3n+1)::before { display: block; left: 50%; top: -15px; margin: 0 0 0 -4.5px; transform: rotate(135deg); }
+}
+
+/* ------------------------------------------------------------------ k-chain: mono pills joined by arrows
+ * from benchmark.css  #benchmark .bm-chain (the evidence chain); the first pill is the dark one. */
+.k-chain { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 30px; }
+.k-chain li {
+  position: relative; display: inline-flex; align-items: center; padding: 5px 12px; border-radius: 999px; background: var(--panel);
+  font-family: var(--mono); font-size: 12.5px; font-weight: 500; line-height: 1.4; color: var(--ink); white-space: nowrap;
+}
+.k-chain li:first-child { background: var(--block); color: var(--on-block); }
+.k-chain li + li::before { content: ""; position: absolute; left: -24px; top: 50%; width: 18px; border-top: 1.5px solid var(--ink-4); }
+.k-chain li + li::after {
+  content: ""; position: absolute; left: -11px; top: 50%; width: 6px; height: 6px; margin-top: -3.6px;
+  border-top: 1.5px solid var(--ink-4); border-right: 1.5px solid var(--ink-4); transform: rotate(45deg);
+}
+
+/* k-trace: a label on the left, the chain (and an optional caption) on the right, over a hairline
+ * from benchmark.css  #benchmark .bm-trace. */
+.k-trace { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 10px 20px; padding-bottom: 22px; margin-bottom: 24px; border-bottom: 1px solid var(--line); }
+.k-trace .kicker { color: var(--rra-ink); font-weight: 600; }
+.k-trace .cap { grid-column: 2; margin: 0; }
+@media (max-width: 640px) { .k-trace { grid-template-columns: minmax(0, 1fr); } .k-trace .cap { grid-column: 1; } }
+
+/* ------------------------------------------------------------------ k-banner: the dark "A and B = C" strip
+ * from benchmark.css  #benchmark .bm-success / .bm-pill / .bm-op.
+ * Markup: div.k-banner > span.k-banner-k + div.k-banner-eq(span.k-pill, span.k-op, span.k-pill.is-ok) + p */
+.k-banner {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 10px 22px;
+  padding: 22px 26px; border-radius: var(--rad-lg); background: var(--block); color: var(--on-block);
+}
+.k-banner-k { font-family: var(--mono); font-size: 11.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: color-mix(in srgb, var(--on-block) 66%, transparent); }
+.k-banner-eq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+.k-pill { display: inline-flex; align-items: center; padding: 8px 14px; border-radius: 999px; background: color-mix(in srgb, var(--on-block) 12%, transparent); font-size: 14.5px; font-weight: 550; line-height: 1.3; }
+.k-pill.is-ok { background: var(--accent-fill); color: var(--on-accent); }
+.k-op { font-family: var(--mono); font-size: 11.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; opacity: .7; }
+.k-banner p { grid-column: 2; margin: 0; font-size: 14px; line-height: 1.5; color: color-mix(in srgb, var(--on-block) 76%, transparent); }
+@media (max-width: 760px) { .k-banner { grid-template-columns: minmax(0, 1fr); padding: 20px; } .k-banner p { grid-column: 1; } }
+
+/* ------------------------------------------------------------------ k-stages: tinted stage columns + a dashed bar under them
+ * from artifact.css  #artifact .cs-flow / .cs-stage / .cs-stage-h / .cs-nb / .cs-role / .cs-out / .cs-arrow / .cs-rev.
+ * Markup: div.k-stages > div.k-stage[data-s] > h4(span.k-snb + name) + div.k-srole(b + span)* + p.k-sout, with
+ * i.k-sarrow between stages; then div.k-under for the cross-cutting bar. Stage colour = --sc (set by data-s). */
+.k-stages { display: grid; grid-template-columns: minmax(0, 1fr) 26px minmax(0, 1fr) 26px minmax(0, 1fr); align-items: stretch; }
+.k-stage {
+  --sc: var(--st-specify); --sk: var(--rra-ink);
+  display: flex; flex-direction: column; gap: 4px; padding: 16px 14px 12px; border-radius: var(--rad);
+  background: color-mix(in srgb, var(--sc) 7%, var(--bg)); border: 1px solid color-mix(in srgb, var(--sc) 22%, var(--line));
+}
+.k-stage[data-s="2"] { --sc: var(--st-execute); --sk: var(--raw-ink); }
+.k-stage[data-s="3"] { --sc: var(--st-preserve); --sk: var(--gold-ink); }
+.k-stage[data-s="4"] { --sc: var(--st-review); --sk: var(--violet-ink); }
+.k-stage h4 {
+  display: flex; align-items: center; gap: 10px; margin: 0 0 6px; padding: 0 4px 10px;
+  border-bottom: 1px solid color-mix(in srgb, var(--sc) 20%, var(--line)); font-size: 20px; font-weight: 620; letter-spacing: -.015em; color: var(--ink);
+}
+.k-snb { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--sc); color: #fff; font-family: var(--mono); font-size: 13px; font-weight: 700; }
+:root[data-theme="dark"] .k-snb { color: var(--bg); }
+.k-srole { display: flex; flex-direction: column; gap: 1px; padding: 8px 10px; border: 1px solid transparent; border-radius: 11px; }
+.k-srole b { font-size: 16px; font-weight: 640; letter-spacing: -.01em; color: var(--ink); }
+.k-srole span { font-size: 13.5px; line-height: 1.35; color: var(--ink-3); }
+.k-srole.is-on { background: var(--bg); border-color: var(--sc); box-shadow: 0 0 0 1px var(--sc), var(--shadow-sm); }
+.k-sout { margin: auto 0 0; padding: 10px 4px 0; border-top: 1px solid color-mix(in srgb, var(--sc) 20%, var(--line)); font-size: 14px; font-weight: 600; color: var(--sk); }
+.k-sarrow { position: relative; align-self: center; height: 1.5px; margin: 0 5px; background: var(--ink-3); }
+.k-sarrow::after {
+  content: ""; position: absolute; right: -1px; top: 50%; width: 6px; height: 6px; transform: translateY(-50%) rotate(45deg);
+  border-top: 1.5px solid var(--ink-3); border-right: 1.5px solid var(--ink-3);
+}
+.k-under {
+  display: flex; align-items: center; gap: 14px; margin-top: 34px; padding: 12px 18px;
+  border: 1.5px dashed color-mix(in srgb, var(--violet) 55%, transparent); border-radius: 14px; background: var(--violet-tint);
+}
+.k-under b { font-size: 17px; color: var(--violet-ink); white-space: nowrap; }
+.k-under span { margin-left: auto; font-size: 13.5px; color: var(--ink-2); }
+@media (max-width: 860px) { .k-stages { grid-template-columns: minmax(0, 1fr); gap: 14px; } .k-sarrow { display: none; } }
+
+/* ------------------------------------------------------------------ k-icard: icon cards (3-up rules, 2-up uses)
+ * from artifact.css  #artifact .rule / .rule-ic  and scope.css  #scope .sc-use / .sc-ic (.is-primary = filled icon). */
+.k-icard { position: relative; display: flex; flex-direction: column; padding: 22px 22px 20px; border-radius: var(--rad-lg); background: var(--bg); border: 1px solid var(--line); }
+.k-ic { display: grid; place-items: center; width: 40px; height: 40px; margin-bottom: 14px; border-radius: 12px; background: var(--rra-tint); color: var(--rra-ink); }
+.k-ic svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.k-ic.is-neutral { background: var(--panel); color: var(--ink-2); }
+.k-ic.is-solid { background: var(--accent-fill); color: var(--on-accent); }
+.k-icard h4 { margin: 0 0 6px; font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+.k-icard p { margin: 0; font-size: 15px; line-height: 1.58; color: var(--ink-2); }
+.k-icard.is-lg { padding: 30px 30px 26px; }
+.k-icard.is-lg h4 { font-size: clamp(21px, 1.9vw, 24px); font-weight: 580; letter-spacing: -.018em; margin: 0 0 10px; }
+.k-icard.is-lg p { font-size: 16px; line-height: 1.62; }
+.k-ihead { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.k-ihead .k-ic { width: 44px; height: 44px; border-radius: 13px; margin: 0; }
+.k-ifoot { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: auto; padding-top: 18px; border-top: 1px solid var(--line); }
+.k-icard p + .k-ifoot { margin-top: 22px; }
+
+/* ------------------------------------------------------------------ k-lim: grey panel cards with an index and an icon
+ * from scope.css  #scope .sc-lim / .sc-lim-top / .sc-lim-no / .sc-lim-ic / .sc-lim-ev / .sc-lim-link. */
+.k-lim { display: flex; flex-direction: column; padding: 24px 24px 20px; border-radius: var(--rad-lg); background: var(--panel); }
+.k-lim-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.k-lim-no { font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: .08em; color: var(--rra-ink); }
+.k-lim-top svg { width: 26px; height: 26px; color: var(--ink-3); fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.k-lim h4 { font-size: 18px; font-weight: 600; letter-spacing: -.012em; margin: 0 0 8px; }
+.k-lim p { margin: 0 0 18px; color: var(--ink-2); font-size: 15px; line-height: 1.6; }
+.k-lim .k-lim-ev { margin-top: -8px; font-size: 13.5px; line-height: 1.55; color: var(--ink-3); }
+.k-lim-link {
+  margin-top: auto; align-self: flex-start; padding-top: 12px; width: 100%; border-top: 1px solid var(--line-2);
+  font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); text-decoration: none;
+}
+.k-lim-link:hover { color: var(--rra-ink); }
+
+/* ------------------------------------------------------------------ k-callout / k-future: one-line notes
+ * k-callout from artifact.css  #artifact .art-cost (warm gold strip);  k-future from scope.css  #scope .sc-future. */
+.k-callout {
+  display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-radius: var(--rad);
+  background: color-mix(in srgb, var(--bridge-fill) 60%, var(--bg)); border: 1px solid color-mix(in srgb, var(--bridge-stroke) 55%, transparent);
+  font-size: 15px; line-height: 1.55; color: var(--ink-2);
+}
+.k-callout p { margin: 0; }
+.k-callout b { color: var(--ink); font-weight: 650; font-variant-numeric: tabular-nums; }
+.k-callout a { white-space: nowrap; font-weight: 550; text-decoration: none; }
+.k-future { display: flex; align-items: flex-start; gap: 16px; padding: 20px 24px; border-radius: var(--rad-lg); border: 1.5px dashed var(--line-2); }
+.k-future p { margin: 0; color: var(--ink); font-size: 16.5px; line-height: 1.55; }
+
+/* ------------------------------------------------------------------ k-rel: link cards with a status badge
+ * from release.css  #release .rel-grid / .rel-card / .rel-ic / .rel-go / .soon. */
+.k-rel-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }
+.k-rel { position: relative; display: flex; flex-direction: column; align-items: flex-start; padding: 22px 22px 24px; border-radius: var(--rad-lg); background: var(--bg); border: 1px solid var(--line); }
+.k-rel .k-ic { margin-bottom: 22px; width: 42px; height: 42px; }
+.k-rel .kicker { display: block; margin-bottom: 8px; }
+.k-rel h3 { font-size: 18px; font-weight: 600; letter-spacing: -.012em; margin: 0 0 8px; }
+.k-rel p { margin: 0; font-size: 14.5px; line-height: 1.55; color: var(--ink-3); }
+.k-rel .soon { position: absolute; top: 33px; right: 22px; color: var(--ink-3); opacity: 1; border-color: var(--line-2); }
+.k-rel-go {
+  position: absolute; top: 33px; right: 22px; padding: 2px 9px; border-radius: 999px; line-height: 1.5;
+  font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  background: var(--accent-fill); color: var(--on-accent);
+}
+.k-rel.is-live { transition: border-color .2s var(--ease), box-shadow .25s var(--ease), transform .2s var(--ease); }
+.k-rel.is-live:hover { border-color: color-mix(in srgb, var(--rra) 45%, var(--line)); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.k-rel-stretch { position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+@media (max-width: 1080px) { .k-rel-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .k-rel-grid { grid-template-columns: 1fr; gap: 10px; } }
+
+/* ------------------------------------------------------------------ k-access: "given" vs "withheld" lists
+ * from benchmark.css  #benchmark .bm-access / .bm-acc-in (green, dashed) / .bm-acc-out (grey, hatched). */
+.k-access { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.k-acc { position: relative; overflow: hidden; border-radius: var(--rad-lg); padding: 22px 26px 24px; isolation: isolate; }
+.k-acc.is-in { background: color-mix(in srgb, var(--rra-tint) 70%, var(--bg)); }
+.k-acc.is-in::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; border: 1.5px dashed color-mix(in srgb, var(--rra) 55%, transparent); }
+.k-acc.is-out { background: var(--panel); }
+.k-acc.is-out::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--ink) 6%, transparent) 0 1px, transparent 1px 9px);
+}
+.k-acc .note-title { margin: 0 0 12px; }
+.k-acc.is-in .note-title { color: var(--rra-ink); }
+.k-acc ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.k-acc li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; line-height: 1.5; color: var(--ink); }
+.k-acc.is-out li { color: var(--ink-2); }
+.k-acc li::before { content: ""; flex: none; width: 18px; height: 18px; margin-top: 2.5px; border-radius: 50%; background: var(--accent-fill); }
+.k-acc.is-out li::before { background: color-mix(in srgb, var(--ink) 10%, transparent); }
+@media (max-width: 760px) { .k-access { grid-template-columns: minmax(0, 1fr); gap: 14px; } }
+
+/* ------------------------------------------------------------------ k-split: two counts over one proportional bar
+ * from benchmark.css  #benchmark .bm-mix / .bm-split.  Set each <i>'s flex-grow to its count. */
+.k-mix { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px 36px; }
+.k-split-k { display: block; margin-bottom: 10px; font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+.k-split-nums { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 13.5px; color: var(--ink-2); }
+.k-split-nums span:last-child { text-align: right; }
+.k-split-nums b { display: block; font-size: 26px; font-weight: 520; letter-spacing: -.03em; line-height: 1.1; color: var(--ink); }
+.k-split-bar { display: flex; gap: 2px; height: 10px; margin: 10px 0; border-radius: 5px; overflow: hidden; }
+.k-split-bar i { display: block; flex-basis: 0; }
+.k-split-bar i:first-child { background: var(--ink-3); }
+.k-split-bar i:last-child { background: var(--ink-4); }
+.k-split p { margin: 0; font-size: 13px; line-height: 1.5; color: var(--ink-3); }
+@media (max-width: 700px) { .k-mix { grid-template-columns: minmax(0, 1fr); gap: 26px; } }
+
+/* ------------------------------------------------------------------ k-quote: the left-ruled key sentence
+ * from artifact.css  #artifact .ap-def (3px rule in the component colour) and .csp-rule (with a mono label). */
+.k-quote { margin: 0; padding: 2px 0 2px 16px; border-left: 3px solid var(--qc, var(--rra)); }
+.k-quote p, .k-quote q { margin: 0; font-size: 17.5px; line-height: 1.55; color: var(--ink); quotes: "“" "”"; }
+.k-quote-k { display: block; margin-bottom: 4px; font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+
+/* ------------------------------------------------------------------ k-steps: a vertical step list / timeline
+ * from story.css  #story .story-steps / .story-step / .story-step-k (the no-JS list of the walkthrough).
+ * .is-done fills the node (as .is-past does in the live walkthrough); .is-now adds the halo of .is-active. */
+.k-steps { list-style: none; margin: 0; padding: 0; max-width: 760px; }
+.k-steps li { position: relative; padding: 0 0 40px 36px; }
+.k-steps li::before { content: ""; position: absolute; left: 0; top: 5px; width: 11px; height: 11px; border-radius: 50%; background: var(--bg); box-shadow: inset 0 0 0 2px var(--rra); }
+.k-steps li::after { content: ""; position: absolute; left: 5px; top: 24px; bottom: 6px; width: 1px; background: var(--line-2); }
+.k-steps li:last-child { padding-bottom: 8px; }
+.k-steps li:last-child::after { content: none; }
+.k-steps li.is-done::before { background: var(--rra-2); box-shadow: inset 0 0 0 1.5px var(--rra-2); }
+.k-steps li.is-now::before { background: var(--rra); box-shadow: inset 0 0 0 1.5px var(--rra), 0 0 0 4px color-mix(in srgb, var(--rra) 20%, transparent); }
+.k-steps h3 { margin: 0 0 8px; font-family: var(--mono); font-size: 12px; font-weight: 600; line-height: 1.5; letter-spacing: .12em; text-transform: uppercase; color: var(--rra-ink); }
+.k-steps p { margin: 0; color: var(--ink-2); font-size: 16.5px; line-height: 1.62; }
+.k-steps p b { color: var(--ink); font-weight: 620; }
+
+/* ------------------------------------------------------------------ k-win: a window frame for screenshots and files
+ * from artifact.css  #artifact .art-tree / .win-bar / .win-dots / .win-name / .win-meta (the file-tree window). */
+.k-win { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--rad-lg); border: 1px solid var(--line); background: var(--bg); box-shadow: var(--shadow-sm); }
+.k-win-bar { display: flex; align-items: center; gap: 10px; padding: 11px 16px; border-bottom: 1px solid var(--line); background: var(--bg-soft); font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); }
+.k-win-dots { display: inline-flex; gap: 6px; }
+.k-win-dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--line-2); }
+.k-win-name { font-weight: 600; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.k-win-meta { margin-left: auto; font-family: var(--sans); font-size: 12.5px; color: var(--ink-3); white-space: nowrap; }
+.k-win img { display: block; width: 100%; }
+:root[data-theme="dark"] .k-win img { filter: brightness(.9) contrast(1.04); }
+
+/* ------------------------------------------------------------------ k-cm: tinted count cells (2 x 2 matrices)
+ * from benchmark.css  #benchmark .bm-cm-c and its four keys: blue = detected, gold = missed, red = false alarm, grey = rest. */
+.k-cm { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
+.k-cm-c { position: relative; display: grid; place-items: center; height: 62px; border-radius: 10px; font-size: 26px; font-weight: 540; letter-spacing: -.02em; line-height: 1; }
+.k-cm-c small { position: absolute; left: 8px; top: 6px; font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: .06em; opacity: .85; }
+.k-cm-c.is-tp { background: var(--raw-tint); color: var(--raw-ink); }
+.k-cm-c.is-fn { background: var(--gold-tint); color: var(--gold-ink); }
+.k-cm-c.is-fp { background: var(--red-tint); color: var(--red-ink); }
+.k-cm-c.is-tn { background: var(--panel); color: var(--ink-3); }
+
+/* ------------------------------------------------------------------ additions (NOT in the source site)
+ * base.css collapses .split and .grid2/3/4 to a single `1fr` track on narrow screens. `1fr` is minmax(auto, 1fr), so
+ * a wide child (a nowrap table inside .tbl-scroll, a long code line) widens the whole page on phones. The source
+ * never puts such a child in these grids; this rule makes it safe to do so. */
+.split > *, .grid2 > *, .grid3 > *, .grid4 > * { min-width: 0; }
