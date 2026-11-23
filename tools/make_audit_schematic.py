@@ -1,7 +1,7 @@
 """Draws assets/img/audit/audit-view-schematic.png: the stand-in for the audit screenshot.
 
 A synthetic three-pane wireframe (source document, claim graph, inspector) in the site's palette. It shows no
-real paper, judgment, result or identifier. The middle pane carries the words "schematic · not yet evaluated", so the
+real paper, judgment, result or identifier. The middle pane carries the words "schematic · work in progress", so the
 picture cannot pass for a screenshot when it is seen without its caption. Drawn at 2x and downscaled to 2400 x 1004.
 
 Usage (from the site folder):
@@ -121,7 +121,7 @@ for c in range(2):
 
 # ---- middle: claim-evidence graph -----------------------------------------------------------
 x0, y0, x1, y1 = panes['mid']
-pane_label(panes['mid'], 'CLAIMS · GRAPH', 'schematic · not yet evaluated')
+pane_label(panes['mid'], 'CLAIMS · GRAPH', 'schematic · work in progress')
 
 
 def node(cx, cy, w, h, head=None, dots=(GREEN, GREEN, GOLD)):
@@ -157,7 +157,7 @@ arrow((bots[0][0] + 139, bots[0][1]), (mids[1][0] + 90, mids[1][3]))
 arrow((bots[1][0] + 139, bots[1][1]), (mids[1][0] + 176, mids[1][3]))
 lg_y = y1 - 62
 lx = x0 + 34
-for col, name in ((GREEN, 'supported'), (RED, 'contradicted'), (GOLD, 'insufficient evidence')):
+for col, name in ((GREEN, 'supported'), (RED, 'contradicted'), (GOLD, 'not checked')):
     d.ellipse([px(lx), px(lg_y), px(lx + 18), px(lg_y + 18)], fill=col)
     d.text((px(lx + 30), px(lg_y + 9)), name, font=f_small, fill=INK2, anchor='lm')
     lx += 30 + d.textlength(name, font=f_small) / S + 44

@@ -1,94 +1,31 @@
-<!-- Plan (#plan): the timeline with the minimum completed study, three risks with their responses, three expected
-     contributions and the closing line. Styled by assets/css/plan.css.
-     Timeline: one <li class="tl-stop"> per milestone, in order; is-now = today, is-end = the last milestone.
-     Contributions are expected, not results: keep that label and the caveat line.
-     The closing question is the question of the talk, in the same words as the h2 of 02-thread.html and the
-     eyebrow of the four bridges. -->
+<!-- Summary (section id "plan", kept for the styles in assets/css/plan.css): the three words of the title, one card
+     each with the work behind it, and the closing line. The closing question is the question of the talk, in the
+     same words as the h2 of 02-thread.html and the eyebrow of the four bridges. -->
 <section class="sec" id="plan" aria-labelledby="plan-title">
   <div class="wrap">
     <div class="sec-head" data-reveal>
-      <p class="eyebrow">Plan</p>
-      <h2 id="plan-title">From a December pilot to a summer 2027 defense</h2>
-      <p class="lede">The step that decides the most is the <b>pilot</b> in December. It will add the capture of claim-linked records and freeze the test protocol and the budgets. <b>Study A</b> and <b>Study B</b> follow, then held-out validation and the thesis draft.</p>
+      <p class="eyebrow">Summary</p>
+      <h2 id="plan-title">A conclusion should carry the evidence to check it</h2>
+      <p class="lede">MMLU-Pro and Critique Fine-Tuning are about the model: measuring it, and making it reason better. The other three are the words of the title.</p>
     </div>
-
-    <ol class="tl" data-reveal aria-label="Research schedule after Comp II">
-      <li class="tl-stop is-now">
-        <span class="tl-today tag rra">Today</span>
-        <span class="tl-when">26 Nov 2026</span>
-        <i class="tl-node" aria-hidden="true"></i>
-        <div class="tl-what"><b>Comp II</b><span>this talk</span></div>
-      </li>
-      <li class="tl-stop">
-        <span class="tl-when">Dec 2026</span>
-        <i class="tl-node" aria-hidden="true"></i>
-        <div class="tl-what"><b>Task and capture pilot</b><span>four development repositories</span></div>
-      </li>
-      <li class="tl-stop">
-        <span class="tl-when">Jan–Feb 2027</span>
-        <i class="tl-node" aria-hidden="true"></i>
-        <div class="tl-what"><b>Study A: evidence</b><span>for RQ1</span></div>
-      </li>
-      <li class="tl-stop">
-        <span class="tl-when">Mar–Apr 2027</span>
-        <i class="tl-node" aria-hidden="true"></i>
-        <div class="tl-what"><b>Study B: feedback</b><span>for RQ2</span></div>
-      </li>
-      <li class="tl-stop">
-        <span class="tl-when">May 2027</span>
-        <i class="tl-node" aria-hidden="true"></i>
-        <div class="tl-what"><b>Held-out validation</b><span>one month</span></div>
-      </li>
-      <li class="tl-stop">
-        <span class="tl-when">Jun 2027</span>
-        <i class="tl-node" aria-hidden="true"></i>
-        <div class="tl-what"><b>Thesis synthesis</b><span>the thesis draft</span></div>
-      </li>
-      <li class="tl-stop is-end">
-        <span class="tl-when">Jul–Aug 2027</span>
-        <i class="tl-node" aria-hidden="true"></i>
-        <div class="tl-what"><b>Defense</b><span>planned window</span></div>
-      </li>
-    </ol>
-
-    <div class="min-study" data-reveal>
-      <span class="kicker">Minimum completed study</span>
-      <ol>
-        <li><b>Verified tasks</b> and references</li>
-        <li>The evidence comparison of <b>Study A</b></li>
-        <li><b>Adaptive against fixed</b>, a cost-matched fixed policy</li>
-      </ol>
-    </div>
-    <p class="caveat" data-reveal>The pilot does not start from zero: artifact construction and independent reproduction exist from ReproBridge.</p>
-
-    <h3 class="sub" data-reveal>If something slips, breadth shrinks before the comparisons</h3>
-    <p class="sub-lede" data-reveal>The proposal names three ways the plan can slip, each with a response. In the first two the breadth shrinks and the two paired comparisons stay. In the third, the result itself is the finding.</p>
-    <ol class="risks" data-reveal>
-      <li><span class="risk-k">Risk 1</span><b>Unstable setups</b><span>cheaper tasks, stronger capture</span></li>
-      <li><span class="risk-k">Risk 2</span><b>Labelling bottleneck</b><span>primary claims first, fully adjudicated</span></li>
-      <li><span class="risk-k">Risk 3</span><b>No adaptive gain</b><span>informative if the failure is localized</span></li>
-    </ol>
-
-    <h3 class="sub" data-reveal>A conclusion should carry the evidence to check it</h3>
-    <p class="sub-lede" data-reveal>If this plan holds, the thesis will leave three things. They are <b>expected contributions, not results</b>.</p>
     <div class="grid3" data-reveal>
       <article class="k-icard contrib">
         <span class="k-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 13.5a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.2 1.2"/><path d="M14 10.5a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.2-1.2"/></svg></span>
-        <span class="kicker">01 · Expected</span>
-        <h4>A representation linking claims to evidence</h4>
-        <p>A record that links every claim to its sources and runs.</p>
+        <span class="kicker">03 · Ground</span>
+        <h4>Grounded</h4>
+        <p>ScholarCopilot: writing that points at real, retrieved sources.</p>
       </article>
       <article class="k-icard contrib">
         <span class="k-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 16.5l13-13 4 4-13 13z"/><path d="M7.5 12.5l2 2M10.5 9.5l2 2M13.5 6.5l2 2"/></svg></span>
-        <span class="kicker">02 · Expected</span>
-        <h4>A protocol for independent assessment</h4>
-        <p>It measures how well an outside auditor can assess a claim.</p>
+        <span class="kicker">04 · Reproduce</span>
+        <h4>Reproducible</h4>
+        <p>ReproBridge: procedures kept so that results re-run.</p>
       </article>
       <article class="k-icard contrib">
         <span class="k-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.4"/><circle cx="18" cy="6" r="2.4"/><path d="M8.4 18H13a4 4 0 0 0 4-4V8.4"/><path d="M14.2 11l2.8-2.8 2.8 2.8"/></svg></span>
-        <span class="kicker">03 · Expected</span>
-        <h4>A tested method for acting on audit findings</h4>
-        <p>It turns audit findings into the next action, under a fixed budget.</p>
+        <span class="kicker">05 · Audit · in progress</span>
+        <h4>Auditable</h4>
+        <p>Each claim checked against its own evidence.</p>
       </article>
     </div>
     <div class="closing" data-reveal>

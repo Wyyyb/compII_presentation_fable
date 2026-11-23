@@ -1,65 +1,28 @@
-<!-- Chapter 05 · AUDIT (#audit): work in progress and proposed research. Styled by assets/css/audit.css.
-     Order: the gap (one illustration), the idea (the loop of four stages), what an audit looks like today (three
-     steps above one schematic), related work, the two research questions, the two planned studies with their
-     hypotheses and planning targets, the link back to chapter 02, what each completed work hands over.
-     Rules: planned work is in the future tense; no audit performance number; nothing says the audit has been
-     evaluated. Vocabulary: "claim-linked evidence", "independent audit", "the auditor" (the proposed claim-level
-     one) against "the execution Auditor" (ReproBridge's component); judgments: supported / contradicted /
-     insufficient evidence. RQ1 and RQ2 are verbatim from the proposal. The 8 / 40 / 72 counts are planning targets
-     and always carry the TARGET tag. The image is a schematic stand-in (README.md, "Replacing the audit schematic"). -->
+<!-- Chapter 05 · AUDIT (#audit): ongoing work. Styled by assets/css/audit.css.
+     This public page stays general on purpose: what is audited (a finished paper with its released code, claim by
+     claim), the three steps above one schematic, and what stays open.
+     Rules: no audit performance number, no internal name, no description of the method beyond the three steps.
+     Vocabulary: "the audit" (it judges claims) against "the execution Auditor" (ReproBridge's component).
+     The image is a schematic stand-in (README.md, "Replacing the audit schematic"). -->
 <section class="sec chapter" id="audit" aria-labelledby="audit-title">
   <div class="wrap">
     <div class="sec-head" data-reveal>
-      <p class="ch-label"><span class="sec-no">05 · Audit</span><span class="tag gold wip">In progress · proposed</span><span class="ch-q">Do its claims follow from its evidence?</span></p>
-      <h2 id="audit-title">Keep each claim's evidence; let an independent auditor judge it</h2>
-      <p class="lede">A result can re-run and still mislead. The proposed work will keep <b>claim-linked evidence</b> while the research runs, so that an <b>independent auditor</b> can judge each claim. This is proposed research: <b>none of it is evaluated yet</b>.</p>
-      <p class="judgments" aria-label="The three judgments"><span class="tag rra">Supported</span><span class="tag red">Contradicted</span><span class="tag gold">Insufficient evidence</span></p>
-    </div>
-
-    <h3 class="sub" data-reveal>The gap: both runs reproduce; the comparison is still unfair</h3>
-    <p class="sub-lede" data-reveal>A system claims that its method beats the baseline. Re-running cannot see the problem below, because nothing fails. To see it, a reader needs the claim, the protocol, and what was actually run.</p>
-    <div class="gap-case" data-reveal>
-      <ul class="gap-rows" aria-label="Illustration: a re-run that passes and a comparison that is unfair">
-        <li class="is-ok"><span class="gap-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 12.5l3.6 3.6 7.4-7.8"/></svg></span><b>Both runs finish</b></li>
-        <li class="is-ok"><span class="gap-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 12.5l3.6 3.6 7.4-7.8"/></svg></span><b>The table reproduces</b></li>
-        <li class="is-bad"><span class="gap-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4v16M7 20h10M5 8h14"/><path d="M5 8l-2.5 6a2.5 2.5 0 0 0 5 0z"/><path d="M19 8l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg></span><b>Different test splits</b><span>baseline on split <b>A</b>, our method on split <b>B</b></span></li>
-      </ul>
-      <p class="gap-note">If the record of the split is missing, the honest answer is not “wrong”. It is <b>insufficient evidence</b>.</p>
-    </div>
-    <p class="caveat" data-reveal><span><b>Illustration, from the proposal:</b> “A faithful replay would reproduce an unfair comparison.”</span></p>
-
-    <h3 class="sub" data-reveal>The idea: every stage leaves a record</h3>
-    <p class="sub-lede" data-reveal>The unit of checking moves from the number to the claim. Each stage of the research will leave a record of what was really done, and each claim will point to the records and the sources it rests on.</p>
-    <figure class="fig loop-fig" data-reveal>
-      <div class="loop" role="img" aria-label="The proposed process as a loop of four numbered stages. 1, question and baseline: sources and protocol. 2, hypothesis and execution: code and raw outputs. 3, measurement and claim: statistic and tested scope. 4, independent audit: finding and next action. Each stage leads to the next, and the audit leads back to the first stage.">
-        <div class="loop-box" data-s="1"><span class="loop-n">1</span><div><b>Question and baseline</b><span>Sources and protocol</span></div></div>
-        <i class="loop-ar ar-r" aria-hidden="true"></i>
-        <div class="loop-box" data-s="2"><span class="loop-n">2</span><div><b>Hypothesis and execution</b><span>Code and raw outputs</span></div></div>
-        <i class="loop-ar ar-d" aria-hidden="true"></i>
-        <div class="loop-box" data-s="3"><span class="loop-n">3</span><div><b>Measurement and claim</b><span>Statistic and tested scope</span></div></div>
-        <i class="loop-ar ar-l" aria-hidden="true"></i>
-        <div class="loop-box" data-s="4"><span class="loop-n">4</span><div><b>Independent audit</b><span>Finding and next action</span></div></div>
-        <i class="loop-ar ar-u" aria-hidden="true"></i>
-        <span class="loop-back" aria-hidden="true">↺ The finding will go back to stage 1</span>
-      </div>
-      <figcaption class="schem-note"><span class="tag-note">Planned</span><span>Thesis proposal, Figure 5.1 (redrawn): a planned integration, not an evaluated system.</span></figcaption>
-    </figure>
-    <div class="grid2 loop-notes" data-reveal>
-      <p>In stage 4, a <b>claim-level auditor</b>, a second AI agent, will judge selected claims. It will also check that a cited source supports its sentence. It will return one of three judgments, with reasons and a next action, and the finding will go back to the research agent.</p>
-      <p><b>Independent means separated:</b> a fresh session, its own workspace, read-only access. It does not mean that its errors are unrelated to the agent's.</p>
+      <p class="ch-label"><span class="sec-no">05 · Audit</span><span class="tag gold wip">In progress</span><span class="ch-q">Do its claims follow from its evidence?</span></p>
+      <h2 id="audit-title">Check each claim against its own evidence</h2>
+      <p class="lede">A result can re-run and still mislead. The ongoing work audits a finished paper together with its released code, <b>claim by claim</b>: does each claim follow from the paper's own evidence? This is <b>work in progress</b>. No audit result is reported on this page.</p>
     </div>
 
     <div class="sub-row" data-reveal>
-      <h3 class="sub">What an audit looks like today</h3>
+      <h3 class="sub">One paper, audited claim by claim</h3>
       <span class="tag gold wip">In progress</span>
     </div>
-    <p class="sub-lede" data-reveal>Work in progress, shown to make the idea concrete, not as a result. This is not ReproBridge's execution Auditor: that one checks that a number was measured. This one is meant to judge whether a claim follows from its evidence. It has not been evaluated.</p>
+    <p class="sub-lede" data-reveal>This is not ReproBridge's execution Auditor: that one checks that a number was measured. This one judges whether a claim follows from its evidence.</p>
 
     <div class="audit-view" data-reveal>
       <ol class="steps3">
-        <li data-s="1"><span class="steps3-n">1</span><div><b>Locate claims</b><span>the paper, with its claims located in the text</span></div></li>
-        <li data-s="2"><span class="steps3-n">2</span><div><b>Link evidence</b><span>a graph links each claim to what supports it, and what challenges it</span></div></li>
-        <li data-s="3"><span class="steps3-n">3</span><div><b>Judge each claim</b><span>a judgment, next to the evidence it rests on</span></div></li>
+        <li data-s="1"><span class="steps3-n">1</span><div><b>Locate claims</b><span>the paper, with its claims and their evidence located on the page</span></div></li>
+        <li data-s="2"><span class="steps3-n">2</span><div><b>Link evidence</b><span>a graph links each core claim to what supports it, and to what challenges it</span></div></li>
+        <li data-s="3"><span class="steps3-n">3</span><div><b>Judge each claim</b><span>one claim with its label, next to the comparison it rests on</span></div></li>
       </ol>
       <figure class="fig audit-shot">
         <div class="k-win">
@@ -69,122 +32,18 @@
             <button class="zoom-btn" type="button" data-zoom="assets/img/audit/audit-view-schematic.png" data-title="Audit view (schematic stand-in)">Zoom</button>
           </div>
         </div>
-        <figcaption class="schem-note"><span class="tag-note">Schematic</span><span>After-the-fact assessment of a finished paper and its code. <b>Not yet evaluated.</b> The drawing stands in for the three panes; no real paper, judgment or result is shown.</span></figcaption>
+        <figcaption class="schem-note"><span class="tag-note">Schematic</span><span>A finished paper and its released code, audited after the fact. <b>Work in progress:</b> interface and labels will change. The drawing stands in for the three panes; no real paper, judgment or result is shown.</span></figcaption>
       </figure>
     </div>
 
-    <h3 class="sub" data-reveal>What exists, and what has not been measured</h3>
-    <p class="sub-lede" data-reveal>Research systems, benchmarks and audits all exist. Each group below is named in the proposal's own words.</p>
+    <h3 class="sub" data-reveal>What stays open</h3>
+    <p class="sub-lede" data-reveal>Two questions come after the audit itself.</p>
     <ul class="exists" data-reveal>
-      <li><i class="ex-mk" aria-hidden="true"></i><b>Autonomous research pipelines</b><span>The AI Scientist</span></li>
-      <li><i class="ex-mk" aria-hidden="true"></i><b>Reproduction and replication benchmarks</b><span>CORE-Bench · PaperBench</span></li>
-      <li><i class="ex-mk" aria-hidden="true"></i><b>Fidelity and execution-integrity audits</b><span>Beyond Execution · ReproBridge</span></li>
-      <li class="is-gap"><i class="ex-mk" aria-hidden="true"></i><b>Not yet measured, to my knowledge</b><span>which records an auditor needs (RQ1); whether its findings improve the research (RQ2)</span></li>
+      <li><i class="ex-mk" aria-hidden="true"></i><b>Precision on real papers</b><span>people have to review what the audit flags</span></li>
+      <li><i class="ex-mk" aria-hidden="true"></i><b>Findings back to the research agent</b><span>the second half of the thesis direction: still a hypothesis</span></li>
     </ul>
 
-    <h3 class="sub" data-reveal>The auditor is an instrument; the thesis asks two questions</h3>
-    <p class="sub-lede" data-reveal>The auditor is not the contribution. The first question is about assessment, the second about behaviour. An <b>episode</b> is one complete research run: a question, the experiments, and the claims at the end.</p>
-    <div class="grid2" data-reveal>
-      <article class="rq">
-        <div class="rq-top"><span class="rq-no">RQ1</span><span class="kicker">Assessment</span></div>
-        <h4>Which evidence enables reliable independent assessment?</h4>
-        <p>What must an independent auditor see before we can rely on its judgment? Study A will test this on fixed episodes.</p>
-        <div class="rq-foot"><span class="kicker">Planned test</span><a class="tag" href="#study-a">Study A · fixed episodes</a></div>
-      </article>
-      <article class="rq">
-        <div class="rq-top"><span class="rq-no">RQ2</span><span class="kicker">Behaviour</span></div>
-        <h4>Does audit feedback improve research actions under fixed budgets?</h4>
-        <p>When findings go back to the research agent, does it choose better next steps, at the same cost? Study B will test this in live research.</p>
-        <div class="rq-foot"><span class="kicker">Planned test</span><a class="tag" href="#study-b">Study B · live research</a></div>
-      </article>
-    </div>
-
-    <h3 class="sub" data-reveal>Two planned studies, two hypotheses</h3>
-    <p class="sub-lede" data-reveal>Both studies are designs. The counts are <b>planning targets</b>, to be confirmed after the pilot. Judgments and conclusions will be scored against the labels of <b>two human assessors</b>.</p>
-    <div class="grid2 studies" data-reveal>
-      <article class="study" id="study-a">
-        <div class="study-top"><span class="kicker">Study A · planned</span><span class="tag-note">Jan–Feb 2027</span></div>
-        <h4>Fix the episode, vary what the auditor sees</h4>
-        <p>The claim, the episode, the auditor and the budget will stay fixed. Only what the auditor can inspect will change.</p>
-        <ul class="study-well" aria-label="What the auditor sees">
-          <li><span class="study-k">View 1</span><span>Final paper + repository</span></li>
-          <li><span class="study-k is-on">View 2</span><span>+ full linked records, such as the record of the executed settings</span></li>
-          <li><span class="study-k">View 3</span><span>One record type masked. If it is decisive, the right answer is insufficient evidence, and the study will credit it.</span></li>
-        </ul>
-        <div class="hyp"><span class="kicker">Hypothesis · RQ1</span><p>With linked records, the auditor accepts <b>fewer unsupported claims</b>, at the same coverage.</p></div>
-        <dl class="facts3">
-          <div><dt>8</dt><dd>held-out repositories</dd><span class="tag gold">Target</span></div>
-          <div><dt>40</dt><dd>controlled claim cases</dd><span class="tag gold">Target</span></div>
-          <div class="is-ref"><dt>2</dt><dd>human assessors, labelling separately</dd></div>
-        </dl>
-        <p class="study-fine">Coverage is the share of claims the auditor accepts, so an auditor that always answers “insufficient evidence” cannot win.</p>
-        <div class="rq-foot"><span class="kicker">Planned test of</span><span class="tag">RQ1</span></div>
-      </article>
-      <article class="study" id="study-b">
-        <div class="study-top"><span class="kicker">Study B · planned</span><span class="tag-note">Mar–Apr 2027</span></div>
-        <h4>Same budget, three ways to use findings</h4>
-        <p>A research agent will get a verified starting artifact and a comparative question, and run under three conditions with the same total budget.</p>
-        <ul class="study-well" aria-label="Three conditions">
-          <li><span class="study-k">Passive</span><span>Findings hidden from the planner: a control that pays for audits it cannot use</span></li>
-          <li><span class="study-k">Fixed</span><span>Prespecified checks, tuned on development repositories only, then frozen</span></li>
-          <li><span class="study-k is-on">Adaptive</span><span>Chosen by the finding: for split A against split B, inspect both configurations, then do a matched rerun</span></li>
-        </ul>
-        <div class="hyp"><span class="kicker">Hypothesis · RQ2</span><p>Adaptive feedback gives <b>more supported conclusions</b> than fixed feedback, at equal budget.</p></div>
-        <dl class="facts3">
-          <div><dt>8</dt><dd>questions, one per held-out repository</dd><span class="tag gold">Target</span></div>
-          <div><dt>72</dt><dd>episodes = 8 × 3 conditions × 3 runs</dd><span class="tag gold">Target</span></div>
-          <div class="is-ref"><dt>2</dt><dd>human assessors</dd></div>
-        </dl>
-        <p class="study-fine">The main comparison is adaptive against fixed. Every audit and every rerun counts against the same budget.</p>
-        <div class="rq-foot"><span class="kicker">Planned test of</span><span class="tag">RQ2</span></div>
-      </article>
-    </div>
-    <p class="caveat" data-reveal>Planning targets, to be confirmed after the pilot. With eight repositories the intervals may be wide; the outcome will be reported per repository, beside the aggregate. The proposal makes no power claim.</p>
-
-    <h3 class="sub" data-reveal>Critique returns, this time standing on evidence</h3>
-    <p class="sub-lede" data-reveal>RQ2 brings back the idea of chapter 02. Critique helped a model learn, but only when it could be relied on.</p>
-    <div class="grid3 crit" data-reveal>
-      <article class="crit-card"><b>Critique helped</b><p>CFT: a stronger training signal than answers.</p></article>
-      <article class="crit-card"><b>But only when reliable</b><p>About 1 in 5 of 50 inspected teacher critiques had inaccuracies; self-critique lowered accuracy.</p></article>
-      <article class="crit-card is-on"><b>RQ2</b><p>Findings from a separate auditor, standing on evidence, guide the next action.</p></article>
-    </div>
-    <div class="hyp-banner" data-reveal><span class="kicker">Hypothesis</span><p>Do evidence-based findings improve research actions? Study B will test it. No CFT-trained model is involved.</p></div>
-    <p class="caveat" data-reveal>Critique Fine-Tuning (COLM 2025), Section 4.</p>
-
-    <h3 class="sub" data-reveal>What each completed work hands to the proposal</h3>
-    <p class="sub-lede" data-reveal>The two studies do not start from zero. Two works hand over evidence, one a method, and one a hypothesis.</p>
-    <div class="synth" data-reveal>
-      <a class="synth-cell" href="#measure">
-        <span class="synth-k"><b>01</b> MMLU-Pro</span>
-        <span class="synth-tag"><span class="tag">Method</span></span>
-        <span class="synth-t">Before trusting a score, test the measurement itself</span>
-        <span class="synth-d">held-out repositories and scoring rules fixed in advance</span>
-        <span class="synth-to"><span class="tag dark">RQ1 · RQ2</span></span>
-      </a>
-      <a class="synth-cell is-hyp" href="#improve">
-        <span class="synth-k"><b>02</b> Critique Fine-Tuning</span>
-        <span class="synth-tag"><span class="tag gold">Hypothesis</span></span>
-        <span class="synth-t">Critique as feedback (hypothesis)</span>
-        <span class="synth-d">to be tested, not carried over as evidence</span>
-        <span class="synth-to"><span class="tag dark">RQ2</span></span>
-      </a>
-      <a class="synth-cell" href="#ground">
-        <span class="synth-k"><b>03</b> ScholarCopilot</span>
-        <span class="synth-tag"><span class="tag rra">Evidence</span></span>
-        <span class="synth-t">Source evidence</span>
-        <span class="synth-d">the literature a claim stands on</span>
-        <span class="synth-to"><span class="tag dark">RQ1</span></span>
-      </a>
-      <a class="synth-cell" href="#reproduce">
-        <span class="synth-k"><b>04</b> ReproBridge</span>
-        <span class="synth-tag"><span class="tag rra">Evidence</span></span>
-        <span class="synth-t">Execution evidence + an execution Auditor</span>
-        <span class="synth-d">its execution Auditor stayed silent; RQ2 asks what happens when findings go back</span>
-        <span class="synth-to"><span class="tag dark">RQ1 · RQ2</span></span>
-      </a>
-    </div>
-
-    <div class="takeaway is-wip" data-reveal><span class="takeaway-k">Proposed</span><p>Each stage will leave a <b>record</b>; each claim will <b>link to</b> its evidence; an independent auditor will judge it <b>supported</b>, <b>contradicted</b> or <b>insufficient evidence</b>.</p></div>
-    <p class="caveat" data-reveal>Everything in this chapter is in progress or proposed. No audit result is reported on this page. What stays open is whether these studies confirm the two hypotheses; the plan below says when they will run.</p>
+    <div class="takeaway is-wip" data-reveal><span class="takeaway-k">In progress</span><p>Each claim of a finished paper is checked against <b>its own evidence</b>.</p></div>
+    <p class="caveat" data-reveal>Everything in this chapter is work in progress. No audit result is reported on this page.</p>
   </div>
 </section>

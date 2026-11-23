@@ -12,13 +12,14 @@ it into five smaller ones, one chapter each:
 | 02 Improve | Can we make it reason better? | Critique Fine-Tuning (COLM 2025) and One-Shot CFT (EMNLP 2025) |
 | 03 Ground | Is what it writes tied to real sources? | ScholarCopilot (COLM 2025) |
 | 04 Reproduce | Do its experiments re-run? | ReproBridge (arXiv preprint, 2026) |
-| 05 Audit | Do its claims follow from its evidence? | Proposed research, in progress |
+| 05 Audit | Do its claims follow from its evidence? | Ongoing work, in progress |
 
 Between two chapters a **bridge** says what we have, what is still open, and the next question. The page ends
-with the plan and the list of papers.
+with a summary and the list of papers.
 
-The audit chapter is proposed work. It is written in the future tense, it reports no result, and its picture is
-a schematic drawing (see "Replacing the audit schematic").
+The audit chapter is ongoing work. On this public page it stays general on purpose: what is audited, three steps
+above one picture, and what stays open. It reports no result, describes no method beyond the three steps, and its
+picture is a schematic drawing (see "Replacing the audit schematic").
 
 The page is one static file in the style of the ReproBridge project page: white ground, ink text, one green
 accent, mono-caps labels, hairline cards, big numerals. There is no framework, no bundler and nothing to
@@ -88,8 +89,8 @@ content hash. HTML comments in partials are author notes and are left out of `in
 | `05b-bridge-3.html` | `#bridge-3` | Bridge: Ground to Reproduce. |
 | `06-reproduce.html` | `#reproduce` | Chapter 04, ReproBridge. |
 | `06b-bridge-4.html` | `#bridge-4` | Bridge: Reproduce to Audit. The Audit node is drawn in progress. |
-| `07-audit.html` | `#audit` | Chapter 05, proposed research: the loop of four stages, the schematic, two research questions, two planned studies. |
-| `08-plan.html` | `#plan` | Timeline, risks, three expected contributions, the closing line. |
+| `07-audit.html` | `#audit` | Chapter 05, ongoing work: what is audited, the schematic with its three steps, what stays open. |
+| `08-plan.html` | `#plan` | Summary (the section keeps the id `plan`): the three words of the title, one card each, and the closing line. |
 | `09-publications.html` | `#publications` | The five papers. |
 | `99-footer.html` | | One-line footer. |
 
@@ -107,9 +108,9 @@ blocks and the wording rules that apply to it. Rules that hold everywhere:
   most, with the key terms and numbers in `<b>`. No paragraph runs over 60 words.
 - Every number names its basis in a dashed `.tag-note` or in the `.caveat` line below it.
 - Author lists are shown as printed. ReproBridge's venue label is "arXiv preprint, 2026".
-- ReproBridge's component is always "the execution Auditor". The proposed one in the audit chapter is "the
-  auditor". Its three judgments are "supported", "contradicted" and "insufficient evidence".
-- The audit chapter states plans, not results: future tense, and no audit performance number.
+- ReproBridge's component is always "the execution Auditor". The audit chapter speaks of "the audit": it judges
+  whether a claim follows from its evidence.
+- The audit chapter reports no result: no audit performance number, no internal name, no method detail.
 - Do not write that Critique Fine-Tuning produced a critic. The critiques came from a stronger teacher, and the
   gain is measured in solving.
 - Add `data-reveal` to a block that should fade up when it scrolls into view.
@@ -149,8 +150,8 @@ blocks and the wording rules that apply to it. Rules that hold everywhere:
 - **Stats row**: one `.stat` per number. `.n` is the numeral; `<span class="from">76.4% →</span>` before it is the
   baseline in small blue; `<small>` is a unit; `.l` says what is measured; the dashed `.tag-note` names the data
   basis. Use two or three cells and put the limits in the `.caveat` line below.
-- **Take-away**: one sentence, key words in `<b>`. For planned work use `class="takeaway is-wip"` and the label
-  "Proposed": the block turns gold and dashed.
+- **Take-away**: one sentence, key words in `<b>`. For work in progress use `class="takeaway is-wip"` and the label
+  "In progress": the block turns gold and dashed.
 
 ### Charts
 
@@ -220,12 +221,12 @@ The next question is the question of the chapter that follows, word for word. Br
 | --- | --- | --- |
 | Roadmap | `02-thread.html` | `.road` > two `.road-grp` (bracket label + `ol.road-stops`) > `li.road-stop` (`is-done`, `is-wip`, `to-wip`) > `a.road-card` (verb, question, work, chips). |
 | Gap cases | `05-ground.html` | `.gap-cases` > two `article.gap-case` (label, `h4`, `.code` block with the wrong span in `<mark class="err">`, `.gap-fix` note). |
-| Loop of four stages | `07-audit.html` | `figure.loop-fig` > `.loop` > four `.loop-box` (`data-s="1"` to `"4"`) with arrows between them. |
+| Loop of four stages | not used at present (styles in `audit.css`) | `figure.loop-fig` > `.loop` > four `.loop-box` (`data-s="1"` to `"4"`) with arrows between them. |
 | Audit view | `07-audit.html` | `.audit-view` > `ol.steps3` (three numbered headers sized to the three panes) + `figure.audit-shot` (window frame, image, `SCHEMATIC` caption). |
-| Research-question card | `07-audit.html` | `article.rq` > `.rq-top` (`.rq-no` pill + kicker), `h4`, `p`, `.rq-foot`. |
-| Study card | `07-audit.html` | `article.study` (dashed: planned) > `.study-top`, `h4`, `p`, `ul.study-well`, `.hyp` (hypothesis), `dl.facts3` (planning targets with a `TARGET` tag), `p.study-fine`, `.rq-foot`. Keep these eight children in this order: the two cards share their rows. |
-| Hand-over strip | `07-audit.html` | `.synth` > four `a.synth-cell` (index + work, role tag, what it hands over, arrow to the research question). |
-| Timeline | `08-plan.html` | `ol.tl` > `li.tl-stop` (`is-now` carries the TODAY tag, `is-end` is the last stop) > `.tl-when`, `.tl-node`, `.tl-what`. |
+| Research-question card | not used at present (styles in `audit.css`) | `article.rq` > `.rq-top` (`.rq-no` pill + kicker), `h4`, `p`, `.rq-foot`. |
+| Study card | not used at present (styles in `audit.css`) | `article.study` (dashed: planned) > `.study-top`, `h4`, `p`, `ul.study-well`, `.hyp` (hypothesis), `dl.facts3` (planning targets with a `TARGET` tag), `p.study-fine`, `.rq-foot`. Keep these eight children in this order: the two cards share their rows. |
+| Hand-over strip | not used at present (styles in `audit.css`) | `.synth` > four `a.synth-cell` (index + work, role tag, what it hands over, arrow to the research question). |
+| Timeline | not used at present (styles in `plan.css`) | `ol.tl` > `li.tl-stop` (`is-now` carries the TODAY tag, `is-end` is the last stop) > `.tl-when`, `.tl-node`, `.tl-what`. |
 | Contribution cards | `08-plan.html` | `.grid3` > `article.k-icard.contrib` (icon tile, kicker, `h4`, `p`). |
 | Publication list | `09-publications.html` | `ol.pubs` > `li.pub` > `.pub-venue`, `.pub-main` (`h3`, `p`), `.pub-links`. |
 
